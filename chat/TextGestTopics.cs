@@ -17,7 +17,7 @@ namespace chat.chat
 		if (!chatrooms.ContainsKey(topic)) {
                 chatrooms.Add(topic, new TextChatroom(topic));
             } else {
-                throw new ChatroomAlreadyExistsExistsException(topic);
+                throw new ChatroomAlreadyExistsException(topic);
             }
 
             return topic;
