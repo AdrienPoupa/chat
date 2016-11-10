@@ -6,7 +6,14 @@ using System.Threading.Tasks;
 
 namespace chat.chat
 {
-    class Chatroom
+    interface Chatroom
     {
+        void post(string msg, Chatter c);
+
+        void quit(Chatter c);
+
+        void join(Chatter c);
+
+        string getTopic();
     }
 }

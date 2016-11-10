@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 
 namespace chat.net
 {
-    class MessageConnection
+    interface MessageConnection
     {
+        Message getMessage();
+        void sendMessage(Message m);
     }
 }
