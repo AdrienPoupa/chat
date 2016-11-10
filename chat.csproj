@@ -47,9 +47,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="authentification\Authentification.cs" />
-    <Compile Include="authentification\AuthentificationManagement.cs" />
     <Compile Include="authentification\AuthentificationManager.cs" />
+    <Compile Include="authentification\User.cs" />
     <Compile Include="chat\Chatroom.cs" />
+    <Compile Include="chat\ChatroomAlreadyExistsExistsException.cs" />
     <Compile Include="chat\Chatter.cs" />
     <Compile Include="chat\TextChatroom.cs" />
     <Compile Include="chat\TextChatter.cs" />
@@ -58,8 +59,8 @@
     <Compile Include="client\ClientChatRoom.cs" />
     <Compile Include="client\ClientGestTopics.cs" />
     <Compile Include="exception\AuthentificationException.cs" />
-    <Compile Include="exception\ChatroomAlreadyExistsException.cs" />
-    <Compile Include="exception\UserExitsException .cs" />
+    <Compile Include="exception\ChatroomAlreadyExistsExistsException.cs" />
+    <Compile Include="exception\UserExitsException.cs" />
     <Compile Include="exception\UserUnknownException.cs" />
     <Compile Include="exception\WrongPasswordException.cs" />
     <Compile Include="net\Message.cs" />
