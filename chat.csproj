@@ -57,6 +57,11 @@
     <Compile Include="chat\TopicsManager.cs" />
     <Compile Include="client\ClientChatRoom.cs" />
     <Compile Include="client\ClientGestTopics.cs" />
+    <Compile Include="exception\AuthentificationException.cs" />
+    <Compile Include="exception\ChatroomAlreadyExistsExistsException.cs" />
+    <Compile Include="exception\UserExitsException .cs" />
+    <Compile Include="exception\UserUnknownException.cs" />
+    <Compile Include="exception\WrongPasswordException.cs" />
     <Compile Include="net\Message.cs" />
     <Compile Include="net\MessageConnection.cs" />
     <Compile Include="net\TCPClient.cs" />

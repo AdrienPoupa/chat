@@ -12,5 +12,9 @@ namespace chat.chat
         void receiveAMessage(string msg, Chatter c);
 
         string getAlias();
+
+        void joinNotification(Chatter c);
+
+        void quitNotification(Chatter c);
     }
 }
