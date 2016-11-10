@@ -9,19 +9,32 @@ using System.Threading.Tasks;
 
 namespace chat.authentification
 {
-    class Authentification : AuthentificationManagement
+    class Authentification
     {
         List<User> userList;
 
+        internal List<User> UserList
+        {
+            get
+            {
+                return userList;
+            }
+
+            set
+            {
+                userList = value;
+            }
+        }
+
         Authentification()
         {
-            userList = new List<User>();
+            UserList = new List<User>();
         }
 
         void addUser(string login, string password)
         {
 
-            foreach (User user in userList)
+            foreach (User user in UserList)
             {
                 if (user.Login == login)
                 {
@@ -29,14 +42,14 @@ namespace chat.authentification
                 }
             }
 
-            userList.Add(new User(login, password));
+            UserList.Add(new User(login, password));
         }
 
         void removeUser(string login)
         {
             User userToDelete = null;
 
-            foreach(User user in userList)
+            foreach(User user in UserList)
             {
                 if(user.Login == login)
                 {
@@ -49,14 +62,14 @@ namespace chat.authentification
                 throw new UserUnknownException(login);
             }
 
-            userList.Remove(userToDelete);
+            UserList.Remove(userToDelete);
         }
 
         void authentify(string login, string password)
         {
             User userToAuthentify = null;
 
-            foreach (User user in userList)
+            foreach (User user in UserList)
             {
                 if(user.Login == login && user.Password == password)
                 {
@@ -70,21 +83,25 @@ namespace chat.authentification
             }
         }
 
-        static AuthentificationManagement load(string path)
+        static Authentification load(string path)
         {
-            return new AuthentificationManagement();
+            Authentification authenfication = new Authentification();
 
             try
             {
                 using (Stream stream = File.Open(path, FileMode.Open))
                 {
-                    
+                    BinaryFormatter bin = new BinaryFormatter();
+                    List<User> users = (List<User>)bin.Deserialize(stream);
+                    authenfication.userList = users;
                 }
             }
             catch (IOException e)
             {
                 Console.WriteLine(e.Message);
             }
+
+            return authenfication;
         }
 
         void save(string path)
@@ -94,7 +111,7 @@ namespace chat.authentification
                 using (Stream stream = File.Open(path, FileMode.Create))
                 {
                     BinaryFormatter bin = new BinaryFormatter();
-                    bin.Serialize(stream, userList);
+                    bin.Serialize(stream, UserList);
                 }
             }
             catch (IOException e)
