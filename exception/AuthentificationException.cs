@@ -8,7 +8,7 @@ namespace chat.exception
 {
     class AuthentificationException: System.Exception
     {
-        string _login;
+        public string _login;
 
         public AuthentificationException()
         {
@@ -17,22 +17,12 @@ namespace chat.exception
 
         public AuthentificationException(string message) : base(message)
         {
-
+            _login = message;
         }
 
         public AuthentificationException(string message, Exception innerException) : base(message, innerException)
         {
-
-        }
-
-        public AuthentificationException(string login, string message) : base(message)
-        {
-            _login = login;
-        }
-
-        public AuthentificationException(string login, string message, Exception innerException) : base(message, innerException)
-        {
-            _login = login;
+            _login = message;
         }
     }
 }

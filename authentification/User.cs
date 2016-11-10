@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace chat.authentification
 {
-    class User
+    class User : IComparable<User>
     {
         string login;
         string password;
@@ -41,6 +41,14 @@ namespace chat.authentification
         {
             this.login = login;
             this.password = password;
+        }
+
+        public int CompareTo(User other)
+        {
+            if (this.login == other.login && this.password == other.password)
+                return 0;
+
+            return -1;
         }
     }
 }
