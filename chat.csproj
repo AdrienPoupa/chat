@@ -51,7 +51,7 @@
     <Compile Include="authentification\User.cs" />
     <Compile Include="chat\Chatroom.cs" />
     <Compile Include="chat\Chatter.cs" />
-    <Compile Include="chat\TextChatroom.cs" />
+    <Compile Include="chat\TextChatRoom.cs" />
     <Compile Include="chat\TextChatter.cs" />
     <Compile Include="chat\TextGestTopics.cs" />
     <Compile Include="chat\TopicsManager.cs" />

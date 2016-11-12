@@ -16,7 +16,7 @@ namespace chat.chat
         {
 		    if (!chatrooms.ContainsKey(topic))
             {
-                chatrooms.Add(topic, new TextChatroom(topic));
+                chatrooms.Add(topic, new TextChatRoom(topic));
             }
             else
             {

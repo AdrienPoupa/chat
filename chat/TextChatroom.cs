@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace chat.chat
 {
-    class TextChatroom : Chatroom
+    class TextChatRoom : Chatroom
     {
         private List<Chatter> _users = new List<Chatter>();
         private string _topic;
 
-        public TextChatroom(string topic)
+        public TextChatRoom(string topic)
         {
             _topic = topic;
         }
