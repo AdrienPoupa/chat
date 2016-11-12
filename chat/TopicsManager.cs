@@ -10,9 +10,7 @@ namespace chat.chat
     interface TopicsManager
     {
         List<string> listTopics();
-
         Chatroom joinTopic(string topic);
-
         string createTopic(string topic);
     }
 }

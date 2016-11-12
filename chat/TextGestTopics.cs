@@ -14,9 +14,12 @@ namespace chat.chat
 
         public string createTopic(string topic)
         {
-		if (!chatrooms.ContainsKey(topic)) {
+		    if (!chatrooms.ContainsKey(topic))
+            {
                 chatrooms.Add(topic, new TextChatroom(topic));
-            } else {
+            }
+            else
+            {
                 throw new ChatroomAlreadyExistsException(topic);
             }
 
@@ -26,7 +29,6 @@ namespace chat.chat
         public Chatroom joinTopic(string topic)
         {
             Chatroom chatroom;
-
             chatrooms.TryGetValue(topic, out chatroom);
 
             return chatroom;

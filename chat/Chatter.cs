@@ -10,11 +10,8 @@ namespace chat.chat
     interface Chatter
     {
         void receiveAMessage(string msg, Chatter c);
-
         string getAlias();
-
         void joinNotification(Chatter c);
-
         void quitNotification(Chatter c);
     }
 }

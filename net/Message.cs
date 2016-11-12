@@ -9,20 +9,62 @@ namespace chat.net
 {
     class Message
     {
+        public enum Header { DEBUG, LIST_TOPICS, LISTE_TOPICS_REPLY, CREATE_TOPIC, JOIN_TOPIC, JOIN_REPLY, POST, GET, JOIN_CR, QUIT_CR }
         private Header head;
         private List<string> data;
 
-        public Message(byte[] bytes, int bytesRec)
+        internal Header Head
+        {
+            get
+            {
+                return head;
+            }
+
+            set
+            {
+                head = value;
+            }
+        }
+
+        public List<string> Data
+        {
+            get
+            {
+                return data;
+            }
+
+            set
+            {
+                data = value;
+            }
+        }
+
+        public Message(Header head, string message)
+        {
+            this.Head = head;
+            this.Data.Add(message);
+        }
+
+        public Message(Header head, List<string> messages)
+        {
+            this.Head = head;
+            this.Data = messages;
+        }
+
+        public void addData(string message)
+        {
+            this.Data.Add(message);
+        }
+
+        /*public Message(byte[] bytes, int bytesRec)
         {
             string received = Encoding.ASCII.GetString(bytes, 0, bytesRec);
-
-            // todo: crade. Dans l'absolu, on n'a même pas besoin d'avoir List<string> pour data, vu qu'on a déjà une string en réception...
             data.Add(received);
-        }
+        }*/
 
         public string toString()
         {
-            return head + data.ToString();
+            return Head + " / " + Data.ToString();
         }
     }
 }
