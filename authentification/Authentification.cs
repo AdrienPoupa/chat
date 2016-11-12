@@ -6,7 +6,7 @@ using System.Runtime.Serialization.Formatters.Binary;
 
 namespace chat.authentification
 {
-    class Authentification
+    class Authentification : AuthentificationManager
     {
         List<User> userList;
 
@@ -28,7 +28,7 @@ namespace chat.authentification
             UserList = new List<User>();
         }
 
-        void addUser(string login, string password)
+        public void addUser(string login, string password)
         {
 
             foreach (User user in UserList)
@@ -42,7 +42,7 @@ namespace chat.authentification
             UserList.Add(new User(login, password));
         }
 
-        void removeUser(string login)
+        public void removeUser(string login)
         {
             User userToDelete = null;
 
@@ -62,7 +62,7 @@ namespace chat.authentification
             UserList.Remove(userToDelete);
         }
 
-        void authentify(string login, string password)
+        public void authentify(string login, string password)
         {
             User userToAuthentify = null;
 
@@ -80,7 +80,7 @@ namespace chat.authentification
             }
         }
 
-        static Authentification load(string path)
+        public AuthentificationManager load(string path)
         {
             Authentification authenfication = new Authentification();
 
@@ -101,7 +101,7 @@ namespace chat.authentification
             return authenfication;
         }
 
-        void save(string path)
+        public void save(string path)
         {
             try
             {

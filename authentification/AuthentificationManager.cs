@@ -11,7 +11,7 @@ namespace chat.authentification
         void addUser(string login, string password);
         void removeUser(string login);
         void authentify(string login, string password);
-        AuthentificationManagement load(string path);
+        AuthentificationManager load(string path);
         void save(string path);
     }
 }
