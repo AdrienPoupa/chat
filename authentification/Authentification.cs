@@ -23,7 +23,7 @@ namespace chat.authentification
             }
         }
 
-        Authentification()
+        public Authentification()
         {
             UserList = new List<User>();
         }
