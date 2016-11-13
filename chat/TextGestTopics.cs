@@ -38,9 +38,11 @@ namespace chat.chat
         {
             List<string> vect = new List<string>();
 
+            Console.WriteLine("The opened topics are: ");
             foreach (KeyValuePair<string, Chatroom> entry in chatrooms)
             {
                 vect.Add(entry.Key);
+                Console.WriteLine(entry.Key);
             }
 
             return vect;

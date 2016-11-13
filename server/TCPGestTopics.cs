@@ -15,7 +15,7 @@ namespace chat.server
         private bool started;
         private Dictionary<string, ServerChatRoom> chatrooms = new Dictionary<string, ServerChatRoom>();
 
-        public void createTopic(string topic)
+        public new void createTopic(string topic)
         {
             try
             {
@@ -45,7 +45,7 @@ namespace chat.server
             }
         }
 
-        public List<string> listTopics()
+        public new List<string> listTopics()
         {
             List<string> topics = new List<string>();
             return topics;

@@ -38,12 +38,14 @@ namespace chat.chat
 
         public void joinNotification(Chatter c)
         {
-            Console.WriteLine(c.getAlias() + " joined");
+            // todo: fonction inutile?
+            //Console.WriteLine(c.getAlias() + " joined");
         }
         
         public void quitNotification(Chatter c)
         {
-            Console.WriteLine(c.getAlias() + " left");
+            // todo: fonction inutile?
+            //Console.WriteLine(c.getAlias() + " left");
         }
     }
 }

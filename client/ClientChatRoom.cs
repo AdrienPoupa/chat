@@ -11,7 +11,7 @@ namespace chat.client
     class ClientChatRoom : TCPClient, Chatroom
     {
         private Chatter chatter;
-        private string topic;
+        //private string topic;
         private List<Message> messages = new List<Message>();
         private List<string> aliases = new List<string>();
 

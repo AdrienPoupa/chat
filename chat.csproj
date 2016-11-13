@@ -71,6 +71,7 @@
     <Compile Include="server\ServerChatRoom.cs" />
     <Compile Include="server\ServerGestTopics.cs" />
     <Compile Include="server\TCPGestTopics.cs" />
+    <Compile Include="test\CommandLine.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
