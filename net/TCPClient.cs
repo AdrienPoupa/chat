@@ -70,6 +70,16 @@ namespace chat.net
             }
         }
 
+        public int getPort()
+        {
+            return _port;
+        }
+
+        public IPAddress getAddress()
+        {
+            return _adr;
+        }
+
         /*public Message getMessage()
         {
             // Data buffer for incoming data.

@@ -29,8 +29,8 @@ namespace chat.net
             IPAddress ipAddress = ipHostEntry.AddressList[0];
 
             waitSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-            waitSocket.Bind(new IPEndPoint(ipAddress, port));
-            waitSocket.Listen(2000);
+            waitSocket.Bind(new IPEndPoint(ipAddress, _port));
+            waitSocket.Listen(2000); // 2000 connections allowed
 
             Thread t = new Thread(new ThreadStart(this.run));
             t.Start();

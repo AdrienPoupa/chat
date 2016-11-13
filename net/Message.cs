@@ -45,6 +45,11 @@ namespace chat.net
             this.Data.Add(message);
         }
 
+        public Message(Header head)
+        {
+            this.Head = head;
+        }
+
         public Message(Header head, List<string> messages)
         {
             this.Head = head;
@@ -65,6 +70,11 @@ namespace chat.net
         public string toString()
         {
             return Head + " / " + Data.ToString();
+        }
+
+        public List<string> getData()
+        {
+            return Data;
         }
     }
 }
