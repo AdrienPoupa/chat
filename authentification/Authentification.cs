@@ -35,7 +35,7 @@ namespace chat.authentification
             {
                 if (user.Login == login)
                 {
-                    throw new UserExitsException(login);
+                    throw new UserExistsException(login);
                 }
             }
 

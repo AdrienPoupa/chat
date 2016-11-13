@@ -6,16 +6,16 @@ using System.Threading.Tasks;
 
 namespace chat.exception
 {
-    class WrongPasswordException : AuthentificationException
+    class UserExistsException : AuthentificationException
     {
         public string login { get; set; }
 
-        public WrongPasswordException(string message) : base(message)
+        public UserExistsException(string message) : base(message)
         {
             login = message;
         }
 
-        public WrongPasswordException(string message, Exception innerException) : base(message, innerException)
+        public UserExistsException(string message, Exception innerException) : base(message, innerException)
         {
             login = message;
         }

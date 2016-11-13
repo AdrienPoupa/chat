@@ -32,6 +32,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject>chat.test.UserManagement</StartupObject>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -59,7 +62,7 @@
     <Compile Include="client\ClientGestTopics.cs" />
     <Compile Include="exception\AuthentificationException.cs" />
     <Compile Include="exception\ChatroomAlreadyExistsException.cs" />
-    <Compile Include="exception\UserExitsException.cs" />
+    <Compile Include="exception\UserExistsException.cs" />
     <Compile Include="exception\UserUnknownException.cs" />
     <Compile Include="exception\WrongPasswordException.cs" />
     <Compile Include="net\ExtensionMethods.cs" />
@@ -72,6 +75,7 @@
     <Compile Include="server\ServerGestTopics.cs" />
     <Compile Include="server\TCPGestTopics.cs" />
     <Compile Include="test\CommandLine.cs" />
+    <Compile Include="test\UserManagement.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
