@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Net.Sockets;
 
 namespace chat.server
@@ -35,8 +36,12 @@ namespace chat.server
                         case Message.Header.JOIN_TOPIC:
                             {
                                 string topicToJoin = inputMessage.Data.First();
-
-                                Message outputMessage = new Message(Message.Header.JOIN_TOPIC, "1000"); //todo, port
+                                
+                                // todo: tester validité du port
+                                // http://stackoverflow.com/questions/1904160/getting-the-ip-address-of-a-remote-socket-endpoint
+                                string port = ((IPEndPoint)(comm.RemoteEndPoint)).Port.ToString();
+                            
+                                Message outputMessage = new Message(Message.Header.JOIN_TOPIC, port);
                                 sendMessage(outputMessage);
                             }
                             break;
