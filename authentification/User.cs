@@ -12,19 +12,41 @@ namespace chat.authentification
         string login;
         string password;
 
-        public string Login { get; set; }
-
-        public string Password { get; set; }
-
         public User(string login, string password)
         {
-            this.login = login;
-            this.password = password;
+            this.Login = login;
+            this.Password = password;
+        }
+
+        public string Login
+        {
+            get
+            {
+                return login;
+            }
+
+            set
+            {
+                login = value;
+            }
+        }
+
+        public string Password
+        {
+            get
+            {
+                return password;
+            }
+
+            set
+            {
+                password = value;
+            }
         }
 
         public int CompareTo(User other)
         {
-            if (this.login == other.login && this.password == other.password)
+            if (this.Login == other.Login && this.Password == other.Password)
                 return 0;
 
             return -1;

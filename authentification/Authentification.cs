@@ -40,6 +40,7 @@ namespace chat.authentification
             }
 
             UserList.Add(new User(login, password));
+
         }
 
         public void removeUser(string login)
@@ -80,25 +81,21 @@ namespace chat.authentification
             }
         }
 
-        public AuthentificationManager load(string path)
+        public void load(string path)
         {
-            Authentification authenfication = new Authentification();
-
             try
             {
                 using (Stream stream = File.Open(path, FileMode.Open))
                 {
                     BinaryFormatter bin = new BinaryFormatter();
                     List<User> users = (List<User>)bin.Deserialize(stream);
-                    authenfication.userList = users;
+                    userList = users;
                 }
             }
             catch (IOException e)
             {
                 Console.WriteLine(e.Message);
             }
-
-            return authenfication;
         }
 
         public void save(string path)

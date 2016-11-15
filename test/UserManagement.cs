@@ -18,11 +18,11 @@ namespace chat.test
             try
             {
                 am.addUser("bob", "123");
-                Console.WriteLine("Bob has been added !");
+                Console.WriteLine("1- Bob has been added !");
                 am.removeUser("bob");
-                Console.WriteLine("Bob has been removed !");
+                Console.WriteLine("1- Bob has been removed !");
                 am.removeUser("bob");
-                Console.WriteLine("Bob has been removed twice !");
+                Console.WriteLine("1- Bob has been removed twice !");
             }
             catch (UserUnknownException e)
             {
@@ -37,11 +37,11 @@ namespace chat.test
             try
             {
                 am.addUser("bob", "123");
-                Console.WriteLine("Bob has been added !");
+                Console.WriteLine("2- Bob has been added !");
                 am.authentify("bob", "123");
-                Console.WriteLine("Authentification OK !");
+                Console.WriteLine("2- Authentification OK !");
                 am.authentify("bob", "456");
-                Console.WriteLine("Invalid password !");
+                Console.WriteLine("2- Invalid password !");
             }
             catch (WrongPasswordException e)
             {
@@ -64,7 +64,7 @@ namespace chat.test
                 AuthentificationManager am1 = new Authentification();
                 am1.load("users.txt");
                 am1.authentify("bob", "123");
-                Console.WriteLine("Loading complete !");
+                Console.WriteLine("3- Loading complete !");
             }
             catch (UserUnknownException e)
             {
