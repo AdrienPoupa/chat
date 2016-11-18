@@ -25,8 +25,9 @@ namespace chat.net
 
         public void connect()
         {
+
             remoteEP = new IPEndPoint(_adr, _port);
-            socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+            socket = new Socket(_adr.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
             try
             {
                 socket.Connect(remoteEP);

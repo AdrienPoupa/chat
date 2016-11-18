@@ -28,9 +28,20 @@ namespace chat.net
             IPHostEntry ipHostEntry = Dns.GetHostEntry(Dns.GetHostName());
             IPAddress ipAddress = ipHostEntry.AddressList[0];
 
-            waitSocket = new Socket(AddressFamily.InterNetworkV6, SocketType.Stream, ProtocolType.Tcp);
-            waitSocket.Bind(new IPEndPoint(ipAddress, _port));
-            waitSocket.Listen(2000); // 2000 connections allowed
+            try
+            {
+                waitSocket = new Socket(ipAddress.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
+                waitSocket.Bind(new IPEndPoint(ipAddress, _port));
+                waitSocket.Listen(2000); // 2000 connections allowed
+            }
+            catch(NotSupportedException e)
+            {
+                Console.WriteLine(e.Message);
+            }
+            catch(SocketException e)
+            {
+                Console.WriteLine(e.Message);
+            }
 
             Thread t = new Thread(new ThreadStart(this.run));
             t.Start();
