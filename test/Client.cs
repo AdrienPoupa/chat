@@ -12,7 +12,9 @@ namespace chat.test
     {
         public static void Main()
         {
-            IPAddress ipAddress = Dns.GetHostEntry(Dns.GetHostName()).AddressList[0];
+            IPHostEntry ipHostEntry = Dns.GetHostEntry(Dns.GetHostName());
+            IPAddress ipAddress = ipHostEntry.AddressList[0];
+
             ClientGestTopics cgt = new ClientGestTopics();
             cgt.setServer(ipAddress, 2300);
             cgt.connect();
