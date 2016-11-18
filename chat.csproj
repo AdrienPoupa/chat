@@ -48,7 +48,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <StartupObject>chat.test.Client</StartupObject>
+    <StartupObject>chat.test.Server</StartupObject>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -89,6 +89,7 @@
     <Compile Include="server\ServerChatRoom.cs" />
     <Compile Include="server\ServerGestTopics.cs" />
     <Compile Include="server\TCPGestTopics.cs" />
+    <Compile Include="test\Server.cs" />
     <Compile Include="test\Client.cs" />
     <Compile Include="test\CommandLine.cs" />
     <Compile Include="test\UserManagement.cs" />

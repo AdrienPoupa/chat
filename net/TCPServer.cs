@@ -26,7 +26,7 @@ namespace chat.net
             mode = Mode.treatConnections;
             _port = port;
             IPHostEntry ipHostEntry = Dns.GetHostEntry(Dns.GetHostName());
-            IPAddress ipAddress = ipHostEntry.AddressList[0];
+            IPAddress ipAddress = ipHostEntry.AddressList[1];
 
             waitSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
             waitSocket.Bind(new IPEndPoint(ipAddress, _port));
