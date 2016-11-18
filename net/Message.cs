@@ -42,17 +42,20 @@ namespace chat.net
         public Message(Header head, string message)
         {
             this.Head = head;
+            this.Data = new List<string>();
             this.Data.Add(message);
         }
 
         public Message(Header head)
         {
             this.Head = head;
+            this.Data = new List<string>();
         }
 
         public Message(Header head, List<string> messages)
         {
             this.Head = head;
+            this.Data = new List<string>();
             this.Data = messages;
         }
 
@@ -60,12 +63,6 @@ namespace chat.net
         {
             this.Data.Add(message);
         }
-
-        /*public Message(byte[] bytes, int bytesRec)
-        {
-            string received = Encoding.ASCII.GetString(bytes, 0, bytesRec);
-            data.Add(received);
-        }*/
 
         public string toString()
         {
