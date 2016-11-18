@@ -53,7 +53,18 @@ namespace chat.net
             {
                 NetworkStream strm = new NetworkStream(socket);
                 IFormatter formatter = new BinaryFormatter();
-                return (Message)formatter.Deserialize(strm);
+                Message message;
+
+                try
+                {
+                    message = (Message)formatter.Deserialize(strm);
+                    string toto = "";
+                    return message;
+                }
+                catch(SerializationException e)
+                {
+                    Console.WriteLine(e.Message);
+                }
             }
             catch (SerializationException e)
             {

@@ -19,6 +19,7 @@ namespace chat.test
             cgt.setServer(ipAddress, 2300);
             cgt.connect();
             cgt.createTopic("Test topic");
+            cgt.joinTopic("Test topic");
         }
     }
 }

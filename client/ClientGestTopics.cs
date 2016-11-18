@@ -56,7 +56,7 @@ namespace chat.client
         }
 
 
-        public Chatroom joinTopic(String topic)
+        public Chatroom joinTopic(string topic)
         {
             Message message = new Message(Message.Header.JOIN_TOPIC, topic);
             try
