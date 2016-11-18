@@ -16,7 +16,6 @@ namespace chat.net
         private Socket socket;
         private IPAddress _adr;
         private IPEndPoint remoteEP;
-        //private byte[] bytes;
 
         public void setServer(IPAddress adr, int port)
         {
