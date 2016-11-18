@@ -28,13 +28,16 @@ namespace chat.server
             try
             {
                 Message inputMessage;
+
                 while ((inputMessage = getMessage()) != null)
                 {
                     //Message inputMessage = getMessage();
                     switch (inputMessage.Head)
                     {
                         case Message.Header.JOIN_CR:
+                            break;
                         case Message.Header.JOIN_REPLY:
+                            break;
                         case Message.Header.JOIN_TOPIC:
                             pseudo = inputMessage.getData().First();
                             password = inputMessage.getData().ElementAt(1);
@@ -86,6 +89,7 @@ namespace chat.server
             List<string> data = new List<string>(2);
             data.Add(c.getAlias());
             data.Add(msg);
+
             try
             {
                 sendMessage(new Message(Message.Header.GET, data));
@@ -116,6 +120,7 @@ namespace chat.server
         {
             List<string> data = new List<string>(1);
             data.Add(c.getAlias());
+
             try
             {
                 sendMessage(new Message(Message.Header.QUIT_CR, data));
