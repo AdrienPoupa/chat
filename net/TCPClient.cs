@@ -58,7 +58,6 @@ namespace chat.net
                 try
                 {
                     message = (Message)formatter.Deserialize(strm);
-                    string toto = "";
                     return message;
                 }
                 catch(SerializationException e)

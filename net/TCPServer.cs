@@ -12,14 +12,16 @@ using System.Threading.Tasks;
 
 namespace chat.net
 {
+
+    [Serializable]
     abstract class TCPServer : MessageConnection
     {
-        private Socket commSocket;
-        private Socket waitSocket; // todo: serversocket in the subject
-        private int _port; // todo: get port from socket?
-        private enum Mode { treatClient, treatConnections }
-        private Mode mode;
-        private byte[] bytes;
+        protected Socket commSocket;
+        protected Socket waitSocket; // todo: serversocket in the subject
+        protected int _port; // todo: get port from socket?
+        protected enum Mode { treatClient, treatConnections }
+        protected Mode mode;
+        //private byte[] bytes;
 
         public void startServer(int port)
         {
@@ -62,8 +64,7 @@ namespace chat.net
                     try
                     {
                         commSocket = waitSocket.Accept();
-                        TCPServer myClone = this.DeepClone(); // todo: tester clone
-                        myClone.mode = Mode.treatClient;
+                        TCPServer myClone = this.cloneInstance();
                         new Thread(new ThreadStart(myClone.run));
                     }
                     catch (Exception e)
@@ -74,7 +75,7 @@ namespace chat.net
             }
             else
             {
-                gereClient(commSocket);
+                gereClient(_port);
             }
         }
 
@@ -138,6 +139,8 @@ namespace chat.net
             commSocket.Send(msg);
         }*/
 
-        public abstract void gereClient(Socket comm);
+        public abstract void gereClient(int port);
+
+        public abstract TCPServer cloneInstance();
     }
 }

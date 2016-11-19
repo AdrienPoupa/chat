@@ -9,14 +9,17 @@ using chat.exception;
 
 namespace chat.server
 {
+    [Serializable]
     class TCPGestTopics : TextGestTopics
     {
         private static int nextPort = 16000;
         private bool started;
-        private Dictionary<string, ServerChatRoom> chatrooms = new Dictionary<string, ServerChatRoom>();
+        private Dictionary<string, ServerChatRoom> chatrooms;
 
         public new void createTopic(string topic)
         {
+            chatrooms = new Dictionary<string, ServerChatRoom>();
+
             try
             {
                 base.createTopic(topic);

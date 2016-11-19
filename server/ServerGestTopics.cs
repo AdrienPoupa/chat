@@ -7,12 +7,15 @@ using System.Net.Sockets;
 
 namespace chat.server
 {
+    [Serializable]
     class ServerGestTopics : TCPServer
     {
-        private TCPGestTopics tcpTopicsManager = new TCPGestTopics();
+        private TCPGestTopics tcpTopicsManager;
 
-        public override void gereClient(Socket comm)
+        public override void gereClient(int port)
         {
+            tcpTopicsManager = new TCPGestTopics();
+
             try
             {
                 Message inputMessage;
@@ -36,12 +39,8 @@ namespace chat.server
                         case Message.Header.JOIN_TOPIC:
                             {
                                 string topicToJoin = inputMessage.Data.First();
-                                
-                                // todo: tester validité du port
-                                // http://stackoverflow.com/questions/1904160/getting-the-ip-address-of-a-remote-socket-endpoint
-                                string port = ((IPEndPoint)(comm.RemoteEndPoint)).Port.ToString();
                             
-                                Message outputMessage = new Message(Message.Header.JOIN_TOPIC, port);
+                                Message outputMessage = new Message(Message.Header.JOIN_TOPIC, port.ToString());
                                 sendMessage(outputMessage);
                             }
                             break;
@@ -54,6 +53,18 @@ namespace chat.server
             {
                 Console.WriteLine(e.Message);
             }
+        }
+
+        public override TCPServer cloneInstance()
+        {
+            ServerGestTopics newInstance = new ServerGestTopics();
+
+            newInstance.mode = Mode.treatClient;
+            newInstance._port = _port;
+            newInstance.waitSocket = waitSocket;
+            newInstance.commSocket = newInstance.waitSocket.Accept();
+
+            return newInstance;
         }
     }
 }

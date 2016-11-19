@@ -8,6 +8,7 @@ using chat.exception;
 
 namespace chat.chat
 {
+    [Serializable]
     class TextGestTopics : TopicsManager
     {
         private Dictionary<string, Chatroom> chatrooms = new Dictionary<string, Chatroom>();

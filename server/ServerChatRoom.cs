@@ -14,7 +14,6 @@ namespace chat.server
     {
         private string pseudo;
         private string password;
-        private Dictionary<string,TextChatRoom> textChatRoom = new Dictionary<string, TextChatRoom>();
         private TextChatRoom textChatroom;
 
         public ServerChatRoom(Chatroom chatroom)
@@ -23,7 +22,7 @@ namespace chat.server
         }
 
         
-        public override void gereClient(Socket comm)
+        public override void gereClient(int port)
         {
             try
             {
@@ -129,6 +128,11 @@ namespace chat.server
             {
                 Console.WriteLine(e);
             }
+        }
+
+        public override TCPServer cloneInstance()
+        {
+            return this;
         }
     }
 }
