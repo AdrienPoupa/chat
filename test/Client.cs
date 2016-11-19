@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using chat.chat;
 using chat.client;
 
 namespace chat.test
@@ -18,8 +19,9 @@ namespace chat.test
             ClientGestTopics cgt = new ClientGestTopics();
             cgt.setServer(ipAddress, 2300);
             cgt.connect();
-            cgt.createTopic("Test topic");
-            cgt.joinTopic("Test topic");
+            Console.WriteLine(cgt.createTopic("Test topic"));
+            Chatroom c = cgt.joinTopic("Test topic");
+            Console.WriteLine(cgt.listTopics().ToString());
         }
     }
 }

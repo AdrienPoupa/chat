@@ -65,7 +65,8 @@ namespace chat.net
                     {
                         commSocket = waitSocket.Accept();
                         TCPServer myClone = this.cloneInstance();
-                        new Thread(new ThreadStart(myClone.run));
+                        Thread t = new Thread(new ThreadStart(myClone.run));
+                        t.Start();
                     }
                     catch (Exception e)
                     {

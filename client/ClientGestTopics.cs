@@ -67,7 +67,8 @@ namespace chat.client
                 ClientChatRoom chatroom = new ClientChatRoom();
                 chatroom.setServer(getAddress(), port);
                 chatroom.connect();
-                new Thread(new ThreadStart(chatroom.run));
+                Thread t = new Thread(new ThreadStart(chatroom.run));
+                t.Start();
                 return chatroom;
             }
             catch (Exception e)
