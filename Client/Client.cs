@@ -15,6 +15,7 @@ namespace Client
     {
         User user;
         ChatroomManager chatroomManager;
+        Boolean logged;
 
         public User User
         {
@@ -42,11 +43,25 @@ namespace Client
             }
         }
 
+        public bool Logged
+        {
+            get
+            {
+                return logged;
+            }
+
+            set
+            {
+                logged = value;
+            }
+        }
+
         public Client()
         {
             User = new User();
             ChatroomManager = new ChatroomManager();
             Quit = false;
+            Logged = false;
         }
 
         public void post(string message)
@@ -76,10 +91,14 @@ namespace Client
                 {
                     if (tcpClient.GetStream().DataAvailable)
                     {
+                        Thread.Sleep(10);
                         Message message = getMessage();
 
-                        Thread processData = new Thread(() => this.processData(message));
-                        processData.Start();
+                        if (message != null)
+                        {
+                            Thread processData = new Thread(() => this.processData(message));
+                            processData.Start();
+                        }
                     }
                 }
                 catch (InvalidOperationException e)
@@ -100,7 +119,7 @@ namespace Client
                 if (socket.Poll(10, SelectMode.SelectRead) && socket.Available == 0)
                 {
                     Quit = true;
-                    Console.WriteLine("Serveur deconnecte");
+                    Console.WriteLine("- Serveur deconnecte");
                 }
 
                 Thread.Sleep(5);
@@ -112,28 +131,69 @@ namespace Client
             switch(message.Head)
             {
                 case Message.Header.REGISTER:
-                    Console.WriteLine("Inscription impossible : " + User.Login);
+                    if(message.MessageList[0] == "success")
+                    {
+                        Console.WriteLine("- Inscription reussie : " + User.Login);
+                    }
+                    else
+                    {
+                        Console.WriteLine("- Inscription impossible : " + User.Login);
+                    }
                     break;
 
                 case Message.Header.JOIN:
-                    Console.WriteLine("Connexion impossible : " + User.Login);
+                    if (message.MessageList[0] == "success")
+                    {
+                        Logged = true;
+                        Console.WriteLine("- Connexion reussie : " + User.Login);
+                    }
+                    else
+                    {
+                        Logged = false;
+                        Console.WriteLine("- Connexion impossible : " + User.Login);
+                    }
                     break;
 
                 case Message.Header.QUIT:
                     Quit = true;
-                    Console.WriteLine("Server deconnecte : ");
+                    Logged = false;
+                    Console.WriteLine("Server deconnecte");
                     break;
 
                 case Message.Header.JOIN_CR:
-                    User.Chatroom = new Chatroom(message.MessageList[0]);
+                    if (message.MessageList[0] == "success")
+                    {
+                        User.Chatroom = new Chatroom(message.MessageList[0]);
+                        Console.WriteLine("- Salon de discussion rejoint : " + message.MessageList[1]);
+                    }
+                    else
+                    {
+                        Console.WriteLine("- Salon de discussion non rejoint : " + message.MessageList[1]);
+                    }
                     break;
 
                 case Message.Header.QUIT_CR:
-                    User.Chatroom = null;
+                    if (message.MessageList[0] == "success")
+                    {
+                        User.Chatroom = null;
+                        Console.WriteLine("- Salon de discussion quitte : " + message.MessageList[1]);
+                    }
+                    else
+                    {
+                        Console.WriteLine("- Salon de discussion non quitte : " + message.MessageList[1]);
+                    }
                     break;
 
                 case Message.Header.CREATE_CR:
-                    sendMessage(new Message(Message.Header.LIST_CR));
+                    if (message.MessageList[0] == "success")
+                    {
+                        sendMessage(new Message(Message.Header.LIST_CR));
+                        Console.WriteLine("- Salon de discussion cree : " + message.MessageList[1]);
+                    }
+                    else
+                    {
+                        Console.WriteLine("- Salon de discussion non cree : " + message.MessageList[1]);
+                    }
                     break;
 
                 case Message.Header.LIST_CR:
@@ -146,7 +206,7 @@ namespace Client
                     break;
 
                 case Message.Header.POST:
-                    Console.WriteLine("Message recu : (" + message.MessageList[0] + ") " + message.MessageList[1]);
+                    Console.WriteLine("- Message recu : (" + message.MessageList[0] + ") " + message.MessageList[1]);
                     break;
             }
         }

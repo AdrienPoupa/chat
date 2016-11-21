@@ -3,3 +3,8 @@ F:\EFREI\C#NET\Project\chat\Chat\bin\Debug\Chat.dll
 F:\EFREI\C#NET\Project\chat\Chat\bin\Debug\Chat.pdb
 F:\EFREI\C#NET\Project\chat\Chat\obj\Debug\Chat.dll
 F:\EFREI\C#NET\Project\chat\Chat\obj\Debug\Chat.pdb
+C:\Users\FABIEN\Documents\EFREI\M1\C#NET\projet\chat\Chat\bin\Debug\Chat.dll.config
+C:\Users\FABIEN\Documents\EFREI\M1\C#NET\projet\chat\Chat\bin\Debug\Chat.dll
+C:\Users\FABIEN\Documents\EFREI\M1\C#NET\projet\chat\Chat\bin\Debug\Chat.pdb
+C:\Users\FABIEN\Documents\EFREI\M1\C#NET\projet\chat\Chat\obj\Debug\Chat.dll
+C:\Users\FABIEN\Documents\EFREI\M1\C#NET\projet\chat\Chat\obj\Debug\Chat.pdb

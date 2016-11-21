@@ -46,7 +46,6 @@ namespace Client
 
                 while(!client.Quit)
                 {
-                    Console.Write("Message a envoyer : ");
                     string message = Console.ReadLine();
                     client.post(message);
                 }

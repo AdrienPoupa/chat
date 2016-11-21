@@ -17,15 +17,39 @@ namespace Chat.Net
     {
         protected TcpClient commSocket;
         protected TcpListener tcpListener;
+        protected Boolean running;
         protected int port;
+
+        public bool Running
+        {
+            get
+            {
+                return running;
+            }
+
+            set
+            {
+                running = value;
+            }
+        }
 
         public void startServer(int port)
         {
             this.port = port;
+            this.Running = false;
             IPAddress ipAddress = IPAddress.Parse("127.0.0.1");
 
-            tcpListener = new TcpListener(ipAddress, port);
-            tcpListener.Start();
+            try
+            {
+                tcpListener = new TcpListener(ipAddress, port);
+                tcpListener.Start();
+                this.Running = true;
+            }
+            catch(SocketException e)
+            {
+                Console.WriteLine("Connexion impossible : " + e.Message);
+            }
+            
         }
 
         public void stopServer()
@@ -54,6 +78,18 @@ namespace Chat.Net
                 Console.WriteLine(e.Message);
             }
             catch(ArgumentNullException e)
+            {
+                Console.WriteLine(e.Message);
+            }
+            catch (DecoderFallbackException e)
+            {
+                Console.WriteLine(e.Message);
+            }
+            catch(InvalidCastException e)
+            {
+                Console.WriteLine(e.Message);
+            }
+            catch(OutOfMemoryException e)
             {
                 Console.WriteLine(e.Message);
             }
