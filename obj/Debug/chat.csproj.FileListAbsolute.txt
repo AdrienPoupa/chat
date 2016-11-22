@@ -1,0 +1,8 @@
+C:\Users\FABIEN\Documents\EFREI\M1\C#NET\projet\chat\bin\Debug\chat.exe.config
+C:\Users\FABIEN\Documents\EFREI\M1\C#NET\projet\chat\bin\Debug\chat.exe
+C:\Users\FABIEN\Documents\EFREI\M1\C#NET\projet\chat\bin\Debug\chat.pdb
+C:\Users\FABIEN\Documents\EFREI\M1\C#NET\projet\chat\obj\Debug\chat.csprojResolveAssemblyReference.cache
+C:\Users\FABIEN\Documents\EFREI\M1\C#NET\projet\chat\obj\Debug\chat.Properties.Resources.resources
+C:\Users\FABIEN\Documents\EFREI\M1\C#NET\projet\chat\obj\Debug\chat.csproj.GenerateResource.Cache
+C:\Users\FABIEN\Documents\EFREI\M1\C#NET\projet\chat\obj\Debug\chat.exe
+C:\Users\FABIEN\Documents\EFREI\M1\C#NET\projet\chat\obj\Debug\chat.pdb

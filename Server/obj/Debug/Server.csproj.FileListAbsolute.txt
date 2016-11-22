@@ -1,1 +1,16 @@
-D:\Documents\OneDrive - Efrei\M1\C#\chat\Server\bin\Debug\Server.exe.config
+F:\EFREI\C#NET\Project\chat\Server\bin\Debug\Server.exe.config
+F:\EFREI\C#NET\Project\chat\Server\bin\Debug\Server.exe
+F:\EFREI\C#NET\Project\chat\Server\bin\Debug\Server.pdb
+F:\EFREI\C#NET\Project\chat\Server\bin\Debug\Chat.dll
+F:\EFREI\C#NET\Project\chat\Server\bin\Debug\Chat.pdb
+F:\EFREI\C#NET\Project\chat\Server\obj\Debug\Server.csprojResolveAssemblyReference.cache
+F:\EFREI\C#NET\Project\chat\Server\obj\Debug\Server.exe
+F:\EFREI\C#NET\Project\chat\Server\obj\Debug\Server.pdb
+C:\Users\FABIEN\Documents\EFREI\M1\C#NET\projet\chat\Server\bin\Debug\Server.exe.config
+C:\Users\FABIEN\Documents\EFREI\M1\C#NET\projet\chat\Server\bin\Debug\Server.exe
+C:\Users\FABIEN\Documents\EFREI\M1\C#NET\projet\chat\Server\bin\Debug\Server.pdb
+C:\Users\FABIEN\Documents\EFREI\M1\C#NET\projet\chat\Server\bin\Debug\Chat.dll
+C:\Users\FABIEN\Documents\EFREI\M1\C#NET\projet\chat\Server\bin\Debug\Chat.pdb
+C:\Users\FABIEN\Documents\EFREI\M1\C#NET\projet\chat\Server\obj\Debug\Server.exe
+C:\Users\FABIEN\Documents\EFREI\M1\C#NET\projet\chat\Server\obj\Debug\Server.pdb
+C:\Users\FABIEN\Documents\EFREI\M1\C#NET\projet\Chat\Server\obj\Debug\Server.csprojResolveAssemblyReference.cache

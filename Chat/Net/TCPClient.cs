@@ -110,6 +110,18 @@ namespace Chat.Net
             {
                 Console.WriteLine(e.Message);
             }
+            catch(DecoderFallbackException e)
+            {
+                Console.WriteLine(e.Message);
+            }
+            catch(InvalidCastException e)
+            {
+                Console.WriteLine(e.Message);
+            }
+            catch (OutOfMemoryException e)
+            {
+                Console.WriteLine(e.Message);
+            }
 
             return null;
         }
