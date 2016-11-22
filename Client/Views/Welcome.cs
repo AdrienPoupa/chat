@@ -5,6 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Net;
+using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -40,7 +41,19 @@ namespace Client.Views
             client = new Client();
 
             client.setServer(IPAddress.Parse(textBox1.Text), Int32.Parse(textBox2.Text));
-            client.connect();
+
+            try
+            {
+                client.connect();
+            }
+            catch (Exception error)
+            {
+                MessageBox.Show(error.Message,
+                    "Connection error",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning);
+            }
+            
         }
     }
 }

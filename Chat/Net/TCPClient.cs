@@ -79,13 +79,14 @@ namespace Chat.Net
             catch(SocketException e)
             {
                 Quit = true;
-                Console.WriteLine("Connextion refusee par le serveur : " + e.Message);
+                Console.WriteLine("Connection refused by the server: " + e.Message);
+                throw new Exception(e.Message);
             }
         }
 
         public void close()
         {
-
+            throw new NotImplementedException();
         }
 
         public Message getMessage()
