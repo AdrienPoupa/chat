@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using Chat.Chat;
+using Server.Views;
 
 namespace Server
 {
@@ -11,19 +13,8 @@ namespace Server
     {
         static void Main(string[] args)
         {
-            Server server = new Server();
-            server.startServer(2300);
-
-            if(server.Running)
-            {
-                server.UserManager.addUser("bob", "123");
-                server.UserManager.addUser("bob2", "123");
-                server.ChatroomManager.addChatroom(new Chatroom("Channel basique"));
-                server.run();
-            }
-            
-            Console.WriteLine("----- End of execution");
-            Console.ReadLine();
+            Application.EnableVisualStyles();
+            Application.Run(new ServerGUI());
         }
     }
 }

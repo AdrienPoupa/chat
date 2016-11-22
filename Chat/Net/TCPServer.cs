@@ -15,10 +15,13 @@ namespace Chat.Net
     [Serializable]
     public abstract class TCPServer
     {
-        protected TcpClient commSocket;
-        protected TcpListener tcpListener;
-        protected Boolean running;
+        protected volatile TcpClient commSocket;
+        protected volatile TcpListener tcpListener;
+        protected volatile Boolean running;
         protected int port;
+        protected Thread checkDataThread;
+        protected Thread checkQuitThread;
+        protected Thread listenerThread;
 
         public bool Running
         {
@@ -54,6 +57,8 @@ namespace Chat.Net
 
         public void stopServer()
         {
+            Console.WriteLine("Stopping the server");
+            this.Running = false;
             tcpListener.Stop();
         }
 

@@ -17,8 +17,8 @@ namespace Server
         UserManager userManager = new UserManager();
         SessionManager sessionManager = new SessionManager();
         ChatroomManager chatroomManager = new ChatroomManager();
-
-        public bool readLock = false;
+        
+        public volatile bool readLock = false;
 
         public UserManager UserManager
         {
@@ -61,29 +61,41 @@ namespace Server
 
         public void run()
         {
-            Thread checkData = new Thread(new ThreadStart(this.checkData));
-            checkData.Start();
+            checkDataThread = new Thread(new ThreadStart(this.checkData));
+            checkDataThread.Start();
 
-            Thread checkQuit = new Thread(new ThreadStart(this.checkQuit));
-            checkQuit.Start();
+            checkQuitThread = new Thread(new ThreadStart(this.checkQuit));
+            checkQuitThread.Start();
 
-            while (true)
+            listenerThread = new Thread(new ThreadStart(this.listen));
+            listenerThread.Start();
+        }
+
+        private void listen()
+        {
+            while (this.Running)
             {
-                Console.WriteLine("Attente d'une nouvelle connexion...");
-                TcpClient client = this.tcpListener.AcceptTcpClient();
+                try
+                {
+                    Console.WriteLine("Attente d'une nouvelle connexion...");
+                    TcpClient client = this.tcpListener.AcceptTcpClient();
+                    Session session = new Session();
+                    session.Client = client;
+                    SessionManager.addSession(session);
 
-                Session session = new Session();
-                session.Client = client;
-
-                SessionManager.addSession(session);
-
-                Console.WriteLine("Nouveau client : " + session.Token);
+                    Console.WriteLine("Nouveau client : " + session.Token);
+                }
+                catch (SocketException)
+                {
+                    // Here we catch a WSACancelBlockingCall exception because this.tcpListener is probably closed
+                    Console.WriteLine("Listener thread closed");
+                }
             }
         }
 
         private void checkData()
         {
-            while (true)
+            while (this.Running)
             {
                 try
                 {
@@ -334,7 +346,7 @@ namespace Server
 
         private void checkQuit()
         {
-            while (true)
+            while (this.Running)
             {
                 for (int i = 0; i < SessionManager.SessionList.Count; i++)
                 {
