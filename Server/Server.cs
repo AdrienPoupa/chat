@@ -358,11 +358,13 @@ namespace Server
 
                         if (!readLock)
                         {
-                            if (SessionManager.SessionList[i].User.Chatroom != null)
+                            if (SessionManager.SessionList[i].User != null && 
+                                SessionManager.SessionList[i].User.Chatroom != null)
                             {
                                 //On prévient les autres utilisateurs que celui-ci est parti
                                 Message messagePostBroadcast = new Message(Message.Header.POST);
-                                messagePostBroadcast.addData("a quitté le salon de discussion \"" + SessionManager.SessionList[i].User.Chatroom.Name + "\"");
+                                messagePostBroadcast.addData("a quitté le salon de discussion \"" + 
+                                    SessionManager.SessionList[i].User.Chatroom.Name + "\"");
                                 broadcastToChatRoom(SessionManager.SessionList[i], messagePostBroadcast);
                             }
 

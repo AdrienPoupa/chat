@@ -4,7 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Net;
+using System.Windows.Forms;
 using Chat.Net;
+using Client.Views;
 
 namespace Client
 {
@@ -12,6 +14,9 @@ namespace Client
     {
         static void Main(string[] args)
         {
+            Application.EnableVisualStyles();
+            Application.Run(new Welcome());
+            /*
             Client client = new Client();
 
             client.User.Login = "bob";
@@ -37,12 +42,12 @@ namespace Client
                 messageJoinCr.addData("Channel basique");
                 client.sendMessage(messageJoinCr);
 
-                /*Message messageQuitCr = new Message(Message.Header.QUIT_CR);
+                Message messageQuitCr = new Message(Message.Header.QUIT_CR);
                 messageQuitCr.addData("Channel basique");
                 client.sendMessage(messageQuitCr);
 
                 Message messageQuit = new Message(Message.Header.QUIT);
-                client.sendMessage(messageQuit);*/
+                client.sendMessage(messageQuit);
 
                 while(!client.Quit)
                 {
@@ -52,7 +57,7 @@ namespace Client
             }
 
             Console.WriteLine("----- End of execution");
-            Console.ReadLine();
+            Console.ReadLine();*/
         }
     }
 }
