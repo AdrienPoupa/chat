@@ -1,5 +1,0 @@
-F:\EFREI\C#NET\Project\chat\Chat\bin\Debug\Chat.dll.config
-F:\EFREI\C#NET\Project\chat\Chat\bin\Debug\Chat.dll
-F:\EFREI\C#NET\Project\chat\Chat\bin\Debug\Chat.pdb
-F:\EFREI\C#NET\Project\chat\Chat\obj\Debug\Chat.dll
-F:\EFREI\C#NET\Project\chat\Chat\obj\Debug\Chat.pdb

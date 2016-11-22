@@ -1,8 +1,1 @@
-F:\EFREI\C#NET\Project\chat\Server\bin\Debug\Server.exe.config
-F:\EFREI\C#NET\Project\chat\Server\bin\Debug\Server.exe
-F:\EFREI\C#NET\Project\chat\Server\bin\Debug\Server.pdb
-F:\EFREI\C#NET\Project\chat\Server\bin\Debug\Chat.dll
-F:\EFREI\C#NET\Project\chat\Server\bin\Debug\Chat.pdb
-F:\EFREI\C#NET\Project\chat\Server\obj\Debug\Server.csprojResolveAssemblyReference.cache
-F:\EFREI\C#NET\Project\chat\Server\obj\Debug\Server.exe
-F:\EFREI\C#NET\Project\chat\Server\obj\Debug\Server.pdb
+D:\Documents\OneDrive - Efrei\M1\C#\chat\Server\bin\Debug\Server.exe.config

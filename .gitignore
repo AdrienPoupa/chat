@@ -1,0 +1,9 @@
+.vs/chat/v14/
+bin/Debug/
+obj/Debug/
+Chat/bin/Debug/
+Chat/obj/Debug/
+Server/bin/Debug/
+Server/obj/Debug/
+Client/bin/Debug/
+Client/obj/Debug/
