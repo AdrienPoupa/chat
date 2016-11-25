@@ -14,11 +14,19 @@ namespace Server
 {
     class Server : TCPServer
     {
-        UserManager userManager = new UserManager();
-        SessionManager sessionManager = new SessionManager();
-        ChatroomManager chatroomManager = new ChatroomManager();
+        UserManager userManager;
+        SessionManager sessionManager;
+        ChatroomManager chatroomManager;
         
         public volatile bool readLock = false;
+
+        public Server()
+        {
+            userManager = new UserManager();
+            sessionManager = new SessionManager();
+            chatroomManager = new ChatroomManager();
+            chatroomManager.load("chatrooms.db");
+        }
 
         public UserManager UserManager
         {
@@ -191,8 +199,7 @@ namespace Server
                             messageSuccess.addData("error");
                             messageSuccess.addData(message.MessageList[0]);
                             sendMessage(messageSuccess, session.Client.Client);
-
-                            Console.WriteLine("- " + session.User.Login + " : chatroom already exists: " + e.Message);
+                            messageSuccess.addData("Chatroom " + e.Message + " does not exist");
                         }
                         break;
 
@@ -227,7 +234,7 @@ namespace Server
                                 messageError.addData(messageList[0]);
                                 sendMessage(messageError, session.Client.Client);
 
-                                Console.WriteLine("- " + session.User.Login + " is not part of the discussion: " + messageList[0]);
+                                Console.WriteLine(session.User.Login + " is not part of the discussion: " + messageList[0]);
                             }
                         }
                         catch (ChatroomUnknownException e)
@@ -238,7 +245,7 @@ namespace Server
                             messageError.addData(message.MessageList[0]);
                             sendMessage(messageError, session.Client.Client);
 
-                            Console.WriteLine("- " + session.User.Login + ": chatroom does not exist: " + e.Message);
+                            messageError.addData("Chatroom " + e.Message + " does not exist");
                         }
                         break;
 
@@ -249,7 +256,7 @@ namespace Server
                             ChatroomManager.addChatroom(new Chatroom(messageList[0]));
                             ChatroomManager.save("chatrooms.db");
 
-                            //On prévient l'utilisateur que le salona bien été ajouté
+                            //On prévient l'utilisateur que le salon a bien été ajouté
                             Message messageSuccess = new Message(Message.Header.CREATE_CR);
                             messageSuccess.addData("success");
                             messageSuccess.addData(messageList[0]);
@@ -259,13 +266,11 @@ namespace Server
                         }
                         catch (ChatroomAlreadyExistsException e)
                         {
-                            //On prévient l'utilisateur que le salonn'a pas été créé
+                            //On prévient l'utilisateur que le salon n'a pas été créé
                             Message messageError = new Message(Message.Header.CREATE_CR);
                             messageError.addData("error");
-                            messageError.addData(message.MessageList[0]);
+                            messageError.addData("Chatroom " + e.Message + " already exists");
                             sendMessage(messageError, session.Client.Client);
-
-                            Console.WriteLine("- " + session.User.Login + " : chatroom already exists: " + e.Message);
                         }
                         break;
 
@@ -274,7 +279,7 @@ namespace Server
 
                         foreach (Chatroom chatroom in ChatroomManager.ChatroomList)
                         {
-                            message.addData(chatroom.Name);
+                            messageListCr.addData(chatroom.Name);
                         }
 
                         sendMessage(messageListCr, session.Client.Client);

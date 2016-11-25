@@ -48,12 +48,13 @@
             // 
             // chatrooms
             // 
+            this.chatrooms.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.chatrooms.FormattingEnabled = true;
             this.chatrooms.Location = new System.Drawing.Point(127, 9);
             this.chatrooms.Name = "chatrooms";
             this.chatrooms.Size = new System.Drawing.Size(389, 21);
             this.chatrooms.TabIndex = 1;
-            this.chatrooms.Text = "Chatrooms";
+            this.chatrooms.SelectedIndexChanged += new System.EventHandler(this.chatrooms_SelectedIndexChanged);
             // 
             // createChatroomButton
             // 

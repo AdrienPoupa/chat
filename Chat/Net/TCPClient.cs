@@ -96,7 +96,7 @@ namespace Chat.Net
                 NetworkStream strm = tcpClient.GetStream();
                 IFormatter formatter = new BinaryFormatter();
                 Message message = (Message)formatter.Deserialize(strm);
-                Console.WriteLine("## Receiving a message: " + message.Head);
+                Console.WriteLine("## TCPClient Receiving a message: " + message.Head);
                 return message;
             }
             catch (Exception e)
@@ -109,7 +109,7 @@ namespace Chat.Net
 
         public void sendMessage(Message message)
         {
-            Console.WriteLine("## Sending a message: " + message.Head);
+            Console.WriteLine("## TCPClient Sending a message: " + message.Head);
 
             try
             {

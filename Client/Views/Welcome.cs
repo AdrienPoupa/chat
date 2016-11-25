@@ -45,6 +45,7 @@ namespace Client.Views
             try
             {
                 client.connect();
+                client.run();
 
                 var frm = new UserLogin(client);
                 frm.Location = this.Location;

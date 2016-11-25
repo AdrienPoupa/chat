@@ -26,6 +26,7 @@ namespace Chat.Auth
         public UserManager()
         {
             UserList = new List<User>();
+            this.load("users.db");
         }
 
         public void addUser(string login, string password)

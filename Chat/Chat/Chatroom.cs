@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -7,9 +8,11 @@ using System.Threading.Tasks;
 namespace Chat.Chat
 {
     [Serializable]
-    public class Chatroom : IComparable<Chatroom>
+    public class Chatroom : IComparable<Chatroom>, INotifyPropertyChanged
     {
         string name;
+
+        public event PropertyChangedEventHandler PropertyChanged;
 
         public string Name
         {
@@ -21,6 +24,10 @@ namespace Chat.Chat
             set
             {
                 name = value;
+                if (this.PropertyChanged != null)
+                {
+                    this.PropertyChanged(this, new PropertyChangedEventArgs("Name"));
+                }
             }
         }
 
@@ -35,6 +42,11 @@ namespace Chat.Chat
                 return 0;
 
             return -1;
+        }
+
+        public override string ToString()
+        {
+            return name;
         }
     }
 }

@@ -34,7 +34,6 @@ namespace Chat.Chat
 
         public void addChatroom(Chatroom other)
         {
-
             foreach (Chatroom chatroom in ChatroomList)
             {
                 if (chatroom.Name == other.Name)

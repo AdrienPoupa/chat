@@ -64,7 +64,7 @@ namespace Chat.Net
 
         public Message getMessage(Socket socket)
         {
-            Console.WriteLine("## Receiving a message");
+            Console.WriteLine("## TCPServer Receiving a message");
 
             try
             {
@@ -84,7 +84,7 @@ namespace Chat.Net
 
         public void sendMessage(Message message, Socket socket)
         {
-            Console.WriteLine("## Sending a message: " + message.Head);
+            Console.WriteLine("## TCPServer Sending a message: " + message.Head);
 
             try
             {

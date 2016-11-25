@@ -41,10 +41,14 @@ namespace Server.Views
 
                 if (server.Running)
                 {
-                    server.UserManager.addUser("bob", "123");
-                    server.UserManager.addUser("bob2", "123");
-                    server.ChatroomManager.addChatroom(new Chatroom("Channel basique"));
                     server.run();
+                }
+                else
+                {
+                    MessageBox.Show("Server failure",
+                     "Connection error",
+                     MessageBoxButtons.OK,
+                     MessageBoxIcon.Error);
                 }
             }
             else

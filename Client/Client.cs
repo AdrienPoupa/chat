@@ -119,7 +119,7 @@ namespace Client
                 if (socket.Poll(10, SelectMode.SelectRead) && socket.Available == 0)
                 {
                     Quit = true;
-                    Console.WriteLine("- Server disconnected");
+                    Console.WriteLine("- Client checkQuit: Server disconnected");
                 }
 
                 Thread.Sleep(5);
@@ -157,7 +157,7 @@ namespace Client
                 case Message.Header.QUIT:
                     Quit = true;
                     Logged = false;
-                    Console.WriteLine("Server disconnected");
+                    Console.WriteLine("Message.Header.QUIT : Server disconnected");
                     break;
 
                 case Message.Header.JOIN_CR:
@@ -202,6 +202,7 @@ namespace Client
                     foreach(string chatroom in message.MessageList)
                     {
                         chatroomManager.addChatroom(new Chatroom(chatroom));
+                        Console.WriteLine(chatroom);
                     }
                     break;
 
