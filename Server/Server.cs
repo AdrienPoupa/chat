@@ -77,13 +77,13 @@ namespace Server
             {
                 try
                 {
-                    Console.WriteLine("Attente d'une nouvelle connexion...");
+                    Console.WriteLine("Waiting for a new connection...");
                     TcpClient client = this.tcpListener.AcceptTcpClient();
                     Session session = new Session();
                     session.Client = client;
                     SessionManager.addSession(session);
 
-                    Console.WriteLine("Nouveau client : " + session.Token);
+                    Console.WriteLine("New client: " + session.Token);
                 }
                 catch (SocketException)
                 {
@@ -147,14 +147,14 @@ namespace Server
                             {
                                 //On prévient les autres utilisateurs que celui-ci est parti
                                 Message messagePostBroadcast = new Message(Message.Header.POST);
-                                messagePostBroadcast.addData("a quitté le salon de discussion \"" + session.User.Chatroom.Name + "\"");
+                                messagePostBroadcast.addData("left the chatroom \"" + session.User.Chatroom.Name + "\"");
                                 broadcastToChatRoom(session, messagePostBroadcast);
                             }
                             
                             session.Client.Close();
                             sessionManager.removeSession(session.Token);
 
-                            Console.WriteLine("- Utilisateur deconnecte : " + session.Token);
+                            Console.WriteLine("- User logout: " + session.Token);
                         }
                         break;
 
@@ -165,7 +165,7 @@ namespace Server
                             Chatroom chatroom = new Chatroom(messageList[0]);
                             
                             session.User.Chatroom = ChatroomManager.getChatroom(chatroom);
-                            Console.WriteLine("- " + session.User.Login + " a rejoint le salon de discussion : " + messageList[0]);
+                            Console.WriteLine("- " + session.User.Login + " joined the chatroom: " + messageList[0]);
 
                             //On prévient le client que le salon a bien été rejoint
                             Message messageSuccess = new Message(Message.Header.JOIN_CR);
@@ -176,12 +176,12 @@ namespace Server
                             //On envoie au client un message à afficher de la part du serveur
                             Message messagePost = new Message(Message.Header.POST);
                             messagePost.addData("Serveur");
-                            messagePost.addData(session.User.Login + " a rejoint le salon de discussion \"" + session.User.Chatroom.Name + "\"");
+                            messagePost.addData(session.User.Login + " joined the chatroom \"" + session.User.Chatroom.Name + "\"");
                             sendMessage(messagePost, session.Client.Client);
 
                             //On broadcast à tous les participants de la conversations l'arrivée de l'utilisateur
                             Message messagePostBroadcast = new Message(Message.Header.POST);
-                            messagePostBroadcast.addData("a rejoint le salon de discussion \"" + session.User.Chatroom.Name + "\"");
+                            messagePostBroadcast.addData("joined the chatroom \"" + session.User.Chatroom.Name + "\"");
                             broadcastToChatRoom(session, messagePostBroadcast);
                         }
                         catch (ChatroomUnknownException e)
@@ -192,7 +192,7 @@ namespace Server
                             messageSuccess.addData(message.MessageList[0]);
                             sendMessage(messageSuccess, session.Client.Client);
 
-                            Console.WriteLine("- " + session.User.Login + " : le salon de discussion existe deja : " + e.Message);
+                            Console.WriteLine("- " + session.User.Login + " : chatroom already exists: " + e.Message);
                         }
                         break;
 
@@ -212,7 +212,7 @@ namespace Server
 
                                 //On prévient les autres utilisateurs que celui-ci est parti
                                 Message messagePostBroadcast = new Message(Message.Header.POST);
-                                messagePostBroadcast.addData("a quitté le salon de discussion \"" + session.User.Chatroom.Name + "\"");
+                                messagePostBroadcast.addData("left the chatroom \"" + session.User.Chatroom.Name + "\"");
                                 broadcastToChatRoom(session, messagePostBroadcast);
 
                                 session.User.Chatroom = null;
@@ -227,7 +227,7 @@ namespace Server
                                 messageError.addData(messageList[0]);
                                 sendMessage(messageError, session.Client.Client);
 
-                                Console.WriteLine("- " + session.User.Login + " ne fait pas partie de cette salle de discussion : " + messageList[0]);
+                                Console.WriteLine("- " + session.User.Login + " is not part of the discussion: " + messageList[0]);
                             }
                         }
                         catch (ChatroomUnknownException e)
@@ -238,7 +238,7 @@ namespace Server
                             messageError.addData(message.MessageList[0]);
                             sendMessage(messageError, session.Client.Client);
 
-                            Console.WriteLine("- " + session.User.Login + " : le salon de discussion n'existe pas : " + e.Message);
+                            Console.WriteLine("- " + session.User.Login + ": chatroom does not exist: " + e.Message);
                         }
                         break;
 
@@ -255,7 +255,7 @@ namespace Server
                             messageSuccess.addData(messageList[0]);
                             sendMessage(messageSuccess, session.Client.Client);
 
-                            Console.WriteLine("- " + session.User.Login + " : le salon de discussion a bien ete cree : " + messageList[0]);
+                            Console.WriteLine("- " + session.User.Login + " : chatroom has been created: " + messageList[0]);
                         }
                         catch (ChatroomAlreadyExistsException e)
                         {
@@ -265,7 +265,7 @@ namespace Server
                             messageError.addData(message.MessageList[0]);
                             sendMessage(messageError, session.Client.Client);
 
-                            Console.WriteLine("- " + session.User.Login + " : le salon de discussion existe deja : " + e.Message);
+                            Console.WriteLine("- " + session.User.Login + " : chatroom already exists: " + e.Message);
                         }
                         break;
 
@@ -281,7 +281,7 @@ namespace Server
                         break;
 
                     case Message.Header.POST:
-                        Console.WriteLine("- " + session.User.Login + " : message recu : " + message.MessageList[0]);
+                        Console.WriteLine("- " + session.User.Login + " : message received : " + message.MessageList[0]);
                         broadcastToChatRoom(session, message);
                         break;
                 }
@@ -294,8 +294,7 @@ namespace Server
                         try
                         {
                             List<string> messageList = message.MessageList;
-                            UserManager.authentify(messageList[0], messageList[1]);
-                            session.User = new User(messageList[0], messageList[1]);
+                            UserManager.addUser(messageList[0], messageList[1]);
                             UserManager.save("users.db");
 
                             //On prévient l'utilisateur que son compte a bien été enregistré
@@ -303,7 +302,7 @@ namespace Server
                             messageSuccess.addData("success");
                             sendMessage(messageSuccess, session.Client.Client);
 
-                            Console.WriteLine("- Enregistrement effectue : " + session.User.Login);
+                            Console.WriteLine("- Registration success : " + messageList[0]);
                         }
                         catch (UserAlreadyExistsException e)
                         {
@@ -312,7 +311,7 @@ namespace Server
                             messageSuccess.addData("error");
                             sendMessage(messageSuccess, session.Client.Client);
 
-                            Console.WriteLine("- Enregistrement impossible : " + e.Message);
+                            Console.WriteLine("- Registration failed : " + e.Message);
                         }
                         break;
 
@@ -328,7 +327,7 @@ namespace Server
                             messageSuccess.addData("success");
                             sendMessage(messageSuccess, session.Client.Client);
 
-                            Console.WriteLine("- Connexion reussie : " + session.User.Login);
+                            Console.WriteLine("- Login success : " + session.User.Login);
                         }
                         catch (WrongPasswordException e)
                         {
@@ -336,7 +335,7 @@ namespace Server
                             messageSuccess.addData("error");
                             sendMessage(messageSuccess, session.Client.Client);
                             
-                            Console.WriteLine("- Connextion impossible : " + e.Message);
+                            Console.WriteLine("- Login failed : " + e.Message);
                         }
 
                         break;
@@ -354,7 +353,7 @@ namespace Server
 
                     if (socket.Poll(10, SelectMode.SelectRead) && socket.Available == 0)
                     {
-                        Console.WriteLine("- Utilisateur deconnecte : " + SessionManager.SessionList[i].Token);
+                        Console.WriteLine("- User logged out : " + SessionManager.SessionList[i].Token);
 
                         if (!readLock)
                         {
@@ -363,7 +362,7 @@ namespace Server
                             {
                                 //On prévient les autres utilisateurs que celui-ci est parti
                                 Message messagePostBroadcast = new Message(Message.Header.POST);
-                                messagePostBroadcast.addData("a quitté le salon de discussion \"" + 
+                                messagePostBroadcast.addData("left the chatroom \"" + 
                                     SessionManager.SessionList[i].User.Chatroom.Name + "\"");
                                 broadcastToChatRoom(SessionManager.SessionList[i], messagePostBroadcast);
                             }
@@ -396,11 +395,11 @@ namespace Server
                     }
                 }
 
-                Console.WriteLine("- Message de " + session.User.Login + " diffuse");
+                Console.WriteLine("- " + session.User.Login + "'s message broadcast");
             }
             else
             {
-                Console.WriteLine("- L'utilisateur n'est connecte a aucune salle de discussion : " + session.User.Login);
+                Console.WriteLine("- User is not connected to any chatroom: " + session.User.Login);
             }
         }
     }

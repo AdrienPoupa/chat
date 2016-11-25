@@ -11,7 +11,7 @@ using System.Net.Sockets;
 
 namespace Client
 {
-    class Client : TCPClient
+    public class Client : TCPClient
     {
         User user;
         ChatroomManager chatroomManager;
@@ -119,7 +119,7 @@ namespace Client
                 if (socket.Poll(10, SelectMode.SelectRead) && socket.Available == 0)
                 {
                     Quit = true;
-                    Console.WriteLine("- Serveur deconnecte");
+                    Console.WriteLine("- Server disconnected");
                 }
 
                 Thread.Sleep(5);
@@ -133,11 +133,11 @@ namespace Client
                 case Message.Header.REGISTER:
                     if(message.MessageList[0] == "success")
                     {
-                        Console.WriteLine("- Inscription reussie : " + User.Login);
+                        Console.WriteLine("- Registration success: " + User.Login);
                     }
                     else
                     {
-                        Console.WriteLine("- Inscription impossible : " + User.Login);
+                        Console.WriteLine("- Registration failed: " + User.Login);
                     }
                     break;
 
@@ -145,30 +145,30 @@ namespace Client
                     if (message.MessageList[0] == "success")
                     {
                         Logged = true;
-                        Console.WriteLine("- Connexion reussie : " + User.Login);
+                        Console.WriteLine("- Connection success: " + User.Login);
                     }
                     else
                     {
                         Logged = false;
-                        Console.WriteLine("- Connexion impossible : " + User.Login);
+                        Console.WriteLine("- Connection failed: " + User.Login);
                     }
                     break;
 
                 case Message.Header.QUIT:
                     Quit = true;
                     Logged = false;
-                    Console.WriteLine("Server deconnecte");
+                    Console.WriteLine("Server disconnected");
                     break;
 
                 case Message.Header.JOIN_CR:
                     if (message.MessageList[0] == "success")
                     {
                         User.Chatroom = new Chatroom(message.MessageList[0]);
-                        Console.WriteLine("- Salon de discussion rejoint : " + message.MessageList[1]);
+                        Console.WriteLine("- Joined chatroom: " + message.MessageList[1]);
                     }
                     else
                     {
-                        Console.WriteLine("- Salon de discussion non rejoint : " + message.MessageList[1]);
+                        Console.WriteLine("- Could not join chatroom: " + message.MessageList[1]);
                     }
                     break;
 
@@ -176,11 +176,11 @@ namespace Client
                     if (message.MessageList[0] == "success")
                     {
                         User.Chatroom = null;
-                        Console.WriteLine("- Salon de discussion quitte : " + message.MessageList[1]);
+                        Console.WriteLine("- Chatroom left: " + message.MessageList[1]);
                     }
                     else
                     {
-                        Console.WriteLine("- Salon de discussion non quitte : " + message.MessageList[1]);
+                        Console.WriteLine("- Could not leave chatroom : " + message.MessageList[1]);
                     }
                     break;
 
@@ -188,11 +188,11 @@ namespace Client
                     if (message.MessageList[0] == "success")
                     {
                         sendMessage(new Message(Message.Header.LIST_CR));
-                        Console.WriteLine("- Salon de discussion cree : " + message.MessageList[1]);
+                        Console.WriteLine("- Chatroom created: " + message.MessageList[1]);
                     }
                     else
                     {
-                        Console.WriteLine("- Salon de discussion non cree : " + message.MessageList[1]);
+                        Console.WriteLine("- Could not create chatroom: " + message.MessageList[1]);
                     }
                     break;
 
@@ -206,7 +206,7 @@ namespace Client
                     break;
 
                 case Message.Header.POST:
-                    Console.WriteLine("- Message recu : (" + message.MessageList[0] + ") " + message.MessageList[1]);
+                    Console.WriteLine("- Message received: (" + message.MessageList[0] + ") " + message.MessageList[1]);
                     break;
             }
         }

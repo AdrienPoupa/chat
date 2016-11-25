@@ -50,7 +50,7 @@ namespace Chat.Net
             }
             catch(SocketException e)
             {
-                Console.WriteLine("Connexion impossible : " + e.Message);
+                Console.WriteLine("Connection impossible: " + e.Message);
             }
             
         }
@@ -64,37 +64,17 @@ namespace Chat.Net
 
         public Message getMessage(Socket socket)
         {
-            Console.WriteLine("## Reception d'un message");
+            Console.WriteLine("## Receiving a message");
 
             try
             {
                 NetworkStream strm = new NetworkStream(socket);
                 IFormatter formatter = new BinaryFormatter();
                 Message message = (Message)formatter.Deserialize(strm);
-                Console.WriteLine("- header du message : " + message.Head);
+                Console.WriteLine("- message header: " + message.Head);
                 return message;
             }
-            catch (SerializationException e)
-            {
-                Console.WriteLine(e.Message);
-            }
-            catch(IOException e)
-            {
-                Console.WriteLine(e.Message);
-            }
-            catch(ArgumentNullException e)
-            {
-                Console.WriteLine(e.Message);
-            }
-            catch (DecoderFallbackException e)
-            {
-                Console.WriteLine(e.Message);
-            }
-            catch(InvalidCastException e)
-            {
-                Console.WriteLine(e.Message);
-            }
-            catch(OutOfMemoryException e)
+            catch(Exception e)
             {
                 Console.WriteLine(e.Message);
             }
@@ -104,7 +84,7 @@ namespace Chat.Net
 
         public void sendMessage(Message message, Socket socket)
         {
-            Console.WriteLine("## Envoi d'un message : " + message.Head);
+            Console.WriteLine("## Sending a message: " + message.Head);
 
             try
             {

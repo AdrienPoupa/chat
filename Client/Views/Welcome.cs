@@ -45,13 +45,20 @@ namespace Client.Views
             try
             {
                 client.connect();
+
+                var frm = new UserLogin(client);
+                frm.Location = this.Location;
+                frm.StartPosition = FormStartPosition.Manual;
+                frm.FormClosing += delegate { this.Show(); };
+                frm.Show();
+                this.Hide();
             }
             catch (Exception error)
             {
                 MessageBox.Show(error.Message,
                     "Connection error",
                     MessageBoxButtons.OK,
-                    MessageBoxIcon.Warning);
+                    MessageBoxIcon.Error);
             }
             
         }

@@ -96,30 +96,10 @@ namespace Chat.Net
                 NetworkStream strm = tcpClient.GetStream();
                 IFormatter formatter = new BinaryFormatter();
                 Message message = (Message)formatter.Deserialize(strm);
-                Console.WriteLine("## Reception d'un message : " + message.Head);
+                Console.WriteLine("## Receiving a message: " + message.Head);
                 return message;
             }
-            catch (SerializationException e)
-            {
-                Console.WriteLine(e.Message);
-            }
-            catch (IOException e)
-            {
-                Console.WriteLine(e.Message);
-            }
-            catch (ArgumentNullException e)
-            {
-                Console.WriteLine(e.Message);
-            }
-            catch(DecoderFallbackException e)
-            {
-                Console.WriteLine(e.Message);
-            }
-            catch(InvalidCastException e)
-            {
-                Console.WriteLine(e.Message);
-            }
-            catch (OutOfMemoryException e)
+            catch (Exception e)
             {
                 Console.WriteLine(e.Message);
             }
@@ -129,7 +109,7 @@ namespace Chat.Net
 
         public void sendMessage(Message message)
         {
-            Console.WriteLine("## Envoi d'un message : " + message.Head);
+            Console.WriteLine("## Sending a message: " + message.Head);
 
             try
             {
