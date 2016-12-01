@@ -13,9 +13,10 @@ namespace Client
 {
     public class Client : TCPClient
     {
-        User user;
-        ChatroomManager chatroomManager;
-        Boolean logged;
+        private User user;
+        private ChatroomManager chatroomManager;
+        private UserManager userManager;
+        private Boolean logged;
 
         public User User
         {
@@ -27,6 +28,19 @@ namespace Client
             set
             {
                 user = value;
+            }
+        }
+
+        public UserManager UserManager
+        {
+            get
+            {
+                return userManager;
+            }
+
+            set
+            {
+                userManager = value;
             }
         }
 
@@ -60,6 +74,7 @@ namespace Client
         {
             User = new User();
             ChatroomManager = new ChatroomManager();
+            UserManager = new UserManager();
             Quit = false;
             Logged = false;
         }
@@ -203,6 +218,16 @@ namespace Client
                     {
                         chatroomManager.addChatroom(new Chatroom(chatroom));
                         Console.WriteLine(chatroom);
+                    }
+                    break;
+
+                case Message.Header.LIST_USERS:
+                    UserManager.UserList.Clear();
+
+                    foreach (string user in message.MessageList)
+                    {
+                        userManager.addUser(user, "");
+                        Console.WriteLine(user);
                     }
                     break;
 

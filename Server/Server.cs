@@ -23,6 +23,7 @@ namespace Server
         public Server()
         {
             userManager = new UserManager();
+            userManager.load("users.db");
             sessionManager = new SessionManager();
             chatroomManager = new ChatroomManager();
             chatroomManager.load("chatrooms.db");
@@ -171,26 +172,28 @@ namespace Server
                         {
                             List<string> messageList = message.MessageList;
                             Chatroom chatroom = new Chatroom(messageList[0]);
-                            
-                            session.User.Chatroom = ChatroomManager.getChatroom(chatroom);
-                            Console.WriteLine("- " + session.User.Login + " joined the chatroom: " + messageList[0]);
+                            if (chatroomManager.ChatroomList.Contains(chatroom))
+                            {
+                                session.User.Chatroom = ChatroomManager.getChatroom(chatroom);
+                                Console.WriteLine("- " + session.User.Login + " joined the chatroom: " + messageList[0]);
 
-                            //On prévient le client que le salon a bien été rejoint
-                            Message messageSuccess = new Message(Message.Header.JOIN_CR);
-                            messageSuccess.addData("success");
-                            messageSuccess.addData(messageList[0]);
-                            sendMessage(messageSuccess, session.Client.Client);
+                                //On prévient le client que le salon a bien été rejoint
+                                Message messageSuccess = new Message(Message.Header.JOIN_CR);
+                                messageSuccess.addData("success");
+                                messageSuccess.addData(messageList[0]);
+                                sendMessage(messageSuccess, session.Client.Client);
 
-                            //On envoie au client un message à afficher de la part du serveur
-                            Message messagePost = new Message(Message.Header.POST);
-                            messagePost.addData("Serveur");
-                            messagePost.addData(session.User.Login + " joined the chatroom \"" + session.User.Chatroom.Name + "\"");
-                            sendMessage(messagePost, session.Client.Client);
+                                //On envoie au client un message à afficher de la part du serveur
+                                Message messagePost = new Message(Message.Header.POST);
+                                messagePost.addData("Serveur");
+                                messagePost.addData(session.User.Login + " joined the chatroom \"" + session.User.Chatroom.Name + "\"");
+                                sendMessage(messagePost, session.Client.Client);
 
-                            //On broadcast à tous les participants de la conversations l'arrivée de l'utilisateur
-                            Message messagePostBroadcast = new Message(Message.Header.POST);
-                            messagePostBroadcast.addData("joined the chatroom \"" + session.User.Chatroom.Name + "\"");
-                            broadcastToChatRoom(session, messagePostBroadcast);
+                                //On broadcast à tous les participants de la conversations l'arrivée de l'utilisateur
+                                Message messagePostBroadcast = new Message(Message.Header.POST);
+                                messagePostBroadcast.addData("joined the chatroom \"" + session.User.Chatroom.Name + "\"");
+                                broadcastToChatRoom(session, messagePostBroadcast);
+                            }
                         }
                         catch (ChatroomUnknownException e)
                         {
@@ -206,15 +209,12 @@ namespace Server
                     case Message.Header.QUIT_CR:
                         try
                         {
-                            List<string> messageList = message.MessageList;
-                            ChatroomManager.getChatroom(new Chatroom(messageList[0]));
-
-                            if(session.User.Chatroom != null && session.User.Chatroom.Name == messageList[0])
+                            if(session.User.Chatroom != null)
                             {
                                 //On prévient l'utilisateur qu'il a quitté la conversation
                                 Message messageSuccess = new Message(Message.Header.QUIT_CR);
                                 messageSuccess.addData("success");
-                                messageSuccess.addData(messageList[0]);
+                                messageSuccess.addData(session.User.Chatroom.Name);
                                 sendMessage(messageSuccess, session.Client.Client);
 
                                 //On prévient les autres utilisateurs que celui-ci est parti
@@ -222,19 +222,9 @@ namespace Server
                                 messagePostBroadcast.addData("left the chatroom \"" + session.User.Chatroom.Name + "\"");
                                 broadcastToChatRoom(session, messagePostBroadcast);
 
+                                Console.WriteLine("- " + session.User.Login + " left the chatroom: " + session.User.Chatroom.Name);
+
                                 session.User.Chatroom = null;
-
-                                Console.WriteLine("- " + session.User.Login + " a quitte le salon de discussion : " + messageList[0]);
-                            }
-                            else
-                            {
-                                //On prévient l'utilisateur qui n'a pas été éjecté de la conversation car il n'en faisait pas partie
-                                Message messageError = new Message(Message.Header.QUIT_CR);
-                                messageError.addData("error");
-                                messageError.addData(messageList[0]);
-                                sendMessage(messageError, session.Client.Client);
-
-                                Console.WriteLine(session.User.Login + " is not part of the discussion: " + messageList[0]);
                             }
                         }
                         catch (ChatroomUnknownException e)
@@ -288,6 +278,26 @@ namespace Server
                     case Message.Header.POST:
                         Console.WriteLine("- " + session.User.Login + " : message received : " + message.MessageList[0]);
                         broadcastToChatRoom(session, message);
+                        break;
+
+                    case Message.Header.LIST_USERS:
+                        List<string> chatroomWantedList = message.MessageList;
+                        string chatroomWanted = chatroomWantedList[0];
+
+                        Message messageListUsers = new Message(Message.Header.LIST_USERS);
+                        
+                        // For all users currently connected
+                        foreach (User user in UserManager.UserList)
+                        {
+                            // If the user is in the chatroom we want the userlist
+                            if (user.Chatroom != null && user.Chatroom.Name == chatroomWanted)
+                            {
+                                messageListUsers.addData(user.Login);
+                            }
+                        }
+
+                        sendMessage(messageListUsers, session.Client.Client);
+
                         break;
                 }
             }

@@ -69,5 +69,10 @@ namespace Chat.Auth
 
             return -1;
         }
+
+        public override string ToString()
+        {
+            return login;
+        }
     }
 }
