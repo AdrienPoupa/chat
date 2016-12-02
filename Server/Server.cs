@@ -289,7 +289,8 @@ namespace Server
                         foreach (Session localSession in SessionManager.SessionList)
                         {
                             // If the user is in the chatroom we want the userlist
-                            if (localSession.User.Chatroom != null && 
+                            if (localSession.User != null &&
+                                localSession.User.Chatroom != null && 
                                 localSession.User.Chatroom.Name == chatroomWanted)
                             {
                                 messageListUsers.addData(localSession.User.Login);

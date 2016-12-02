@@ -111,8 +111,10 @@ namespace Client.Views
                         userlist.BeginInvoke(
                             (Action)(() =>
                             {
+                                userlist.SelectionMode = SelectionMode.MultiExtended;
                                 userlist.DataSource = null;
                                 userlist.DataSource = client.UserManager.UserList;
+                                userlist.SelectionMode = SelectionMode.None;
                             })
                        );
                     }
