@@ -65,26 +65,6 @@ namespace Chat.Chat
             ChatroomList.Remove(chatroomToDelete);
         }
 
-        public Chatroom getChatroom(Chatroom other)
-        {
-            Chatroom getChatroom = null;
-
-            foreach (Chatroom chatroom in ChatroomList)
-            {
-                if (chatroom.Name == other.Name)
-                {
-                    getChatroom = chatroom;
-                }
-            }
-
-            if (getChatroom == null)
-            {
-                throw new ChatroomUnknownException(other.Name);
-            }
-
-            return getChatroom;
-        }
-
         public void load(string path)
         {
             try

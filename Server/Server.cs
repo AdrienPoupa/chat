@@ -171,10 +171,9 @@ namespace Server
                         try
                         {
                             List<string> messageList = message.MessageList;
-                            Chatroom chatroom = new Chatroom(messageList[0]);
-                            if (chatroomManager.ChatroomList.Contains(chatroom))
+                            if (chatroomManager.ChatroomList.Any(x => x.Name == messageList[0]))
                             {
-                                session.User.Chatroom = ChatroomManager.getChatroom(chatroom);
+                                session.User.Chatroom = new Chatroom(messageList[0]);
                                 Console.WriteLine("- " + session.User.Login + " joined the chatroom: " + messageList[0]);
 
                                 //On prévient le client que le salon a bien été rejoint
@@ -186,12 +185,12 @@ namespace Server
                                 //On envoie au client un message à afficher de la part du serveur
                                 Message messagePost = new Message(Message.Header.POST);
                                 messagePost.addData("Serveur");
-                                messagePost.addData(session.User.Login + " joined the chatroom \"" + session.User.Chatroom.Name + "\"");
+                                messagePost.addData(session.User.Login + " joined the chatroom \"" + messageList[0] + "\"");
                                 sendMessage(messagePost, session.Client.Client);
 
                                 //On broadcast à tous les participants de la conversations l'arrivée de l'utilisateur
                                 Message messagePostBroadcast = new Message(Message.Header.POST);
-                                messagePostBroadcast.addData("joined the chatroom \"" + session.User.Chatroom.Name + "\"");
+                                messagePostBroadcast.addData("joined the chatroom \"" + messageList[0] + "\"");
                                 broadcastToChatRoom(session, messagePostBroadcast);
                             }
                         }
@@ -287,12 +286,13 @@ namespace Server
                         Message messageListUsers = new Message(Message.Header.LIST_USERS);
                         
                         // For all users currently connected
-                        foreach (User user in UserManager.UserList)
+                        foreach (Session localSession in SessionManager.SessionList)
                         {
                             // If the user is in the chatroom we want the userlist
-                            if (user.Chatroom != null && user.Chatroom.Name == chatroomWanted)
+                            if (localSession.User.Chatroom != null && 
+                                localSession.User.Chatroom.Name == chatroomWanted)
                             {
-                                messageListUsers.addData(user.Login);
+                                messageListUsers.addData(localSession.User.Login);
                             }
                         }
 

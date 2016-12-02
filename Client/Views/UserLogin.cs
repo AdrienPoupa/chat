@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using ChatMessage = Chat.Net.Message;
+using ChatUser = Chat.Auth.User;
 
 namespace Client.Views
 {
@@ -55,6 +56,7 @@ namespace Client.Views
 
             if (reply.MessageList.First() == "success")
             {
+                client.User = new ChatUser(usernameTextBox.Text, passwordTextBox.Text);
                 var frm = new Chat(client);
                 frm.Location = this.Location;
                 frm.StartPosition = FormStartPosition.Manual;

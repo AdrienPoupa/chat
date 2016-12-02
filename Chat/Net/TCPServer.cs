@@ -76,6 +76,7 @@ namespace Chat.Net
             }
             catch(Exception e)
             {
+                Console.WriteLine("TCPServer getMessage exception: " + e.Message);
                 Console.WriteLine(e.Message);
             }
 
@@ -94,6 +95,7 @@ namespace Chat.Net
             }
             catch (SerializationException e)
             {
+                Console.WriteLine("TCPServer sendMessage exception: " + e.Message);
                 Console.WriteLine(e.Message);
             }
         }
