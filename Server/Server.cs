@@ -116,7 +116,7 @@ namespace Server
                         {
                             if(session != null && session.Client.GetStream().DataAvailable)
                             {
-                                Thread.Sleep(10);
+                                Thread.Sleep(25);
                                 Message message = getMessage(session.Client.Client);
 
                                 if(message != null)

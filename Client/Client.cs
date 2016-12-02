@@ -106,7 +106,7 @@ namespace Client
                 {
                     if (tcpClient.GetStream().DataAvailable)
                     {
-                        Thread.Sleep(10);
+                        Thread.Sleep(25);
                         Message message = getMessage();
 
                         if (message != null)

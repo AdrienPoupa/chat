@@ -19,7 +19,6 @@ namespace Client.Views
     {
         private Client client;
         private Thread checkChartooms;
-        private Thread checkUsers;
         public Chat(Client clientParam)
         {
             InitializeComponent();
@@ -35,9 +34,6 @@ namespace Client.Views
             checkChartooms.Start();
 
             client.User.Chatroom = new Chatroom("");
-
-            /*checkUsers = new Thread(new ThreadStart(this.getUsers));
-            checkUsers.Start();*/
         }
 
         private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
@@ -61,13 +57,12 @@ namespace Client.Views
 
         private void chatrooms_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Console.WriteLine("index changed");
             if (client.User.Chatroom != null && 
                 client.User.Chatroom.Name != chatrooms.Text && 
                 chatrooms.Text != "")
             {
-                /*ChatMessage quitCr = new ChatMessage(ChatMessage.Header.QUIT_CR);
-                client.sendMessage(quitCr);*/
+                ChatMessage quitCr = new ChatMessage(ChatMessage.Header.QUIT_CR);
+                client.sendMessage(quitCr);
 
                 client.User.Chatroom = new Chatroom(chatrooms.Text);
                 ChatMessage joinCr = new ChatMessage(ChatMessage.Header.JOIN_CR);
@@ -100,43 +95,17 @@ namespace Client.Views
                     // Now, check the users
                     if (client.User.Chatroom != null && client.User.Chatroom.Name != "")
                     {
-                        ChatMessage messageUsers = new ChatMessage(ChatMessage.Header.LIST_USERS);
-                        messageUsers.addData(client.User.Chatroom.Name);
-
-                        client.sendMessage(messageUsers);
-                        Thread.Sleep(2000);
-
-                        // We cannot directly edit UI elements from a thread. Let's invoke the UI itself.
-                        userlist.BeginInvoke(
+                        chatrooms.BeginInvoke(
                             (Action)(() =>
                             {
-                                userlist.DataSource = null;
-                                userlist.DataSource = client.UserManager.UserList;
+                                ChatMessage messageUsers = new ChatMessage(ChatMessage.Header.LIST_USERS);
+                                messageUsers.addData(chatrooms.Text);
+
+                                client.sendMessage(messageUsers);
                             })
-                       );
-                    }
-                }
-                catch (Exception e)
-                {
-                    Console.WriteLine(e.Message);
-                }
-            }
-        }
-
-        private void getUsers()
-        {
-            while (!client.Quit)
-            {
-                try
-                {
-                    ChatMessage messageUsers = new ChatMessage(ChatMessage.Header.JOIN_CR);
-
-                    if (client.User.Chatroom != null && client.User.Chatroom.Name != "")
-                    {
-                        messageUsers.addData(client.User.Chatroom.Name);
-
-                        client.sendMessage(messageUsers);
-                        Thread.Sleep(5000);
+                        );
+                        
+                        Thread.Sleep(2000);
 
                         // We cannot directly edit UI elements from a thread. Let's invoke the UI itself.
                         userlist.BeginInvoke(
