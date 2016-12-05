@@ -32,7 +32,7 @@
             this.chatrooms = new System.Windows.Forms.ComboBox();
             this.createChatroomButton = new System.Windows.Forms.Button();
             this.textBox1 = new System.Windows.Forms.TextBox();
-            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.messageTextBox = new System.Windows.Forms.TextBox();
             this.sendButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
@@ -75,19 +75,20 @@
             this.textBox1.Size = new System.Drawing.Size(515, 289);
             this.textBox1.TabIndex = 3;
             // 
-            // textBox2
+            // messageTextBox
             // 
-            this.textBox2.Location = new System.Drawing.Point(127, 331);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(445, 20);
-            this.textBox2.TabIndex = 4;
-            this.textBox2.Enter += new System.EventHandler(this.sendButton_Click);
+            this.messageTextBox.Location = new System.Drawing.Point(127, 331);
+            this.messageTextBox.Name = "messageTextBox";
+            this.messageTextBox.Size = new System.Drawing.Size(445, 20);
+            this.messageTextBox.TabIndex = 4;
+            this.messageTextBox.TextChanged += new System.EventHandler(this.messageTextBox_TextChanged);
+            this.messageTextBox.Enter += new System.EventHandler(this.sendButton_Click);
             // 
             // sendButton
             // 
-            this.sendButton.Location = new System.Drawing.Point(578, 328);
+            this.sendButton.Location = new System.Drawing.Point(578, 331);
             this.sendButton.Name = "sendButton";
-            this.sendButton.Size = new System.Drawing.Size(64, 23);
+            this.sendButton.Size = new System.Drawing.Size(64, 20);
             this.sendButton.TabIndex = 5;
             this.sendButton.Text = "Send";
             this.sendButton.UseVisualStyleBackColor = true;
@@ -99,7 +100,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(654, 359);
             this.Controls.Add(this.sendButton);
-            this.Controls.Add(this.textBox2);
+            this.Controls.Add(this.messageTextBox);
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.createChatroomButton);
             this.Controls.Add(this.chatrooms);
@@ -117,7 +118,7 @@
         private System.Windows.Forms.ComboBox chatrooms;
         private System.Windows.Forms.Button createChatroomButton;
         private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.TextBox messageTextBox;
         private System.Windows.Forms.Button sendButton;
     }
 }

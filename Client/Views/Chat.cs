@@ -43,7 +43,10 @@ namespace Client.Views
 
         private void sendButton_Click(object sender, EventArgs e)
         {
-
+            ChatMessage messageToSend = new ChatMessage(ChatMessage.Header.POST);
+            messageToSend.addData(messageTextBox.Text);
+            client.sendMessage(messageToSend);
+            messageTextBox.Clear();
         }
 
         private void createChatroomButton_Click(object sender, EventArgs e)
@@ -121,6 +124,11 @@ namespace Client.Views
                     Console.WriteLine(e.Message);
                 }
             }
+        }
+
+        private void messageTextBox_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }
