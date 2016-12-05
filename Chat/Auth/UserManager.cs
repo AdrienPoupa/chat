@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Runtime.Serialization.Formatters.Binary;
 using Chat.Exceptions;
 
@@ -30,7 +31,7 @@ namespace Chat.Auth
 
         public void addUser(string login, string password)
         {
-            foreach (User user in UserList)
+            foreach (User user in UserList.ToList())
             {
                 if (user.Login == login)
                 {
@@ -45,7 +46,7 @@ namespace Chat.Auth
         {
             User userToDelete = null;
 
-            foreach(User user in UserList)
+            foreach(User user in UserList.ToList())
             {
                 if(user.Login == login)
                 {
@@ -65,7 +66,7 @@ namespace Chat.Auth
         {
             User getUser = null;
 
-            foreach (User user in UserList)
+            foreach (User user in UserList.ToList())
             {
                 if (user.Login == other.Login && user.Password == other.Password)
                 {
@@ -85,7 +86,7 @@ namespace Chat.Auth
         {
             User userToAuthentify = null;
 
-            foreach (User user in UserList)
+            foreach (User user in UserList.ToList())
             {
                 if(user.Login == login && user.Password == password)
                 {

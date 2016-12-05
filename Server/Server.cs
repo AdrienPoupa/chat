@@ -112,7 +112,7 @@ namespace Server
 
                     if (SessionManager.SessionList.Count > 0)
                     {
-                        foreach (Session session in SessionManager.SessionList)
+                        foreach (Session session in SessionManager.SessionList.ToList())
                         {
                             if(session != null && session.Client.GetStream().DataAvailable)
                             {
@@ -266,7 +266,7 @@ namespace Server
                     case Message.Header.LIST_CR:
                         Message messageListCr = new Message(Message.Header.LIST_CR);
 
-                        foreach (Chatroom chatroom in ChatroomManager.ChatroomList)
+                        foreach (Chatroom chatroom in ChatroomManager.ChatroomList.ToList())
                         {
                             messageListCr.addData(chatroom.Name);
                         }
@@ -286,7 +286,7 @@ namespace Server
                         Message messageListUsers = new Message(Message.Header.LIST_USERS);
                         
                         // For all users currently connected
-                        foreach (Session localSession in SessionManager.SessionList)
+                        foreach (Session localSession in SessionManager.SessionList.ToList())
                         {
                             // If the user is in the chatroom we want the userlist
                             if (localSession.User != null &&
@@ -403,9 +403,11 @@ namespace Server
                 messageJoin.addData(session.User.Login);
                 messageJoin.addData(message.MessageList[0]);
 
-                foreach(Session sessionUser in SessionManager.SessionList)
+                foreach(Session sessionUser in SessionManager.SessionList.ToList())
                 {
-                    if(sessionUser.User.Chatroom != null && sessionUser.User.Chatroom == chatroom && sessionUser.User != session.User)
+                    if(sessionUser.User.Chatroom != null && 
+                        sessionUser.User.Chatroom == chatroom && 
+                        sessionUser.User != session.User)
                     {
                         sendMessage(messageJoin, sessionUser.Client.Client);
                     }

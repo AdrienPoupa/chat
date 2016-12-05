@@ -32,7 +32,7 @@ namespace Chat.Auth
         public void addSession(Session other)
         {
 
-            foreach (Session session in SessionList)
+            foreach (Session session in SessionList.ToList())
             {
                 if (session.Token == other.Token)
                 {
@@ -48,7 +48,7 @@ namespace Chat.Auth
         {
             Session sessionToDelete = null;
 
-            foreach (Session session in SessionList)
+            foreach (Session session in SessionList.ToList())
             {
                 if (session.Token == token)
                 {

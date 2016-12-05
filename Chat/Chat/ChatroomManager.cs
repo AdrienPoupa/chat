@@ -34,7 +34,7 @@ namespace Chat.Chat
 
         public void addChatroom(Chatroom other)
         {
-            foreach (Chatroom chatroom in ChatroomList)
+            foreach (Chatroom chatroom in ChatroomList.ToList())
             {
                 if (chatroom.Name == other.Name)
                 {
@@ -49,7 +49,7 @@ namespace Chat.Chat
         {
             Chatroom chatroomToDelete = null;
 
-            foreach (Chatroom chatroom in ChatroomList)
+            foreach (Chatroom chatroom in ChatroomList.ToList())
             {
                 if (chatroom.Name == name)
                 {
