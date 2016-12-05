@@ -61,11 +61,6 @@ namespace Client.Views
                 client.User.Chatroom.Name != chatrooms.Text && 
                 chatrooms.Text != "")
             {
-                ChatMessage quitCr = new ChatMessage(ChatMessage.Header.QUIT_CR);
-                client.sendMessage(quitCr);
-
-                Thread.Sleep(200);
-
                 client.User.Chatroom = new Chatroom(chatrooms.Text);
                 ChatMessage joinCr = new ChatMessage(ChatMessage.Header.JOIN_CR);
                 joinCr.addData(chatrooms.Text);

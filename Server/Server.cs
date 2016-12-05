@@ -139,6 +139,40 @@ namespace Server
             }
         }
 
+        private void quitCr(Session session, Message message)
+        {
+            try
+            {
+                if (session.User.Chatroom != null)
+                {
+                    //On prévient l'utilisateur qu'il a quitté la conversation
+                    Message messageSuccess = new Message(Message.Header.QUIT_CR);
+                    messageSuccess.addData("success");
+                    messageSuccess.addData(session.User.Chatroom.Name);
+                    sendMessage(messageSuccess, session.Client.Client);
+
+                    //On prévient les autres utilisateurs que celui-ci est parti
+                    Message messagePostBroadcast = new Message(Message.Header.POST);
+                    messagePostBroadcast.addData("left the chatroom \"" + session.User.Chatroom.Name + "\"");
+                    broadcastToChatRoom(session, messagePostBroadcast);
+
+                    Console.WriteLine("- " + session.User.Login + " left the chatroom: " + session.User.Chatroom.Name);
+
+                    session.User.Chatroom = null;
+                }
+            }
+            catch (ChatroomUnknownException e)
+            {
+                //On prévient l'utilisateur que le salon n'existe pas
+                Message messageError = new Message(Message.Header.QUIT_CR);
+                messageError.addData("error");
+                messageError.addData(message.MessageList[0]);
+                sendMessage(messageError, session.Client.Client);
+
+                messageError.addData("Chatroom " + e.Message + " does not exist");
+            }
+        }
+
         private void processData(Session session, Message message)
         {
             if (session.User != null)
@@ -168,6 +202,9 @@ namespace Server
                         break;
 
                     case Message.Header.JOIN_CR:
+                        // Before joining a chatroom, let's leave the current one
+                        quitCr(session, message);
+
                         try
                         {
                             List<string> messageList = message.MessageList;
@@ -206,36 +243,7 @@ namespace Server
                         break;
 
                     case Message.Header.QUIT_CR:
-                        try
-                        {
-                            if(session.User.Chatroom != null)
-                            {
-                                //On prévient l'utilisateur qu'il a quitté la conversation
-                                Message messageSuccess = new Message(Message.Header.QUIT_CR);
-                                messageSuccess.addData("success");
-                                messageSuccess.addData(session.User.Chatroom.Name);
-                                sendMessage(messageSuccess, session.Client.Client);
-
-                                //On prévient les autres utilisateurs que celui-ci est parti
-                                Message messagePostBroadcast = new Message(Message.Header.POST);
-                                messagePostBroadcast.addData("left the chatroom \"" + session.User.Chatroom.Name + "\"");
-                                broadcastToChatRoom(session, messagePostBroadcast);
-
-                                Console.WriteLine("- " + session.User.Login + " left the chatroom: " + session.User.Chatroom.Name);
-
-                                session.User.Chatroom = null;
-                            }
-                        }
-                        catch (ChatroomUnknownException e)
-                        {
-                            //On prévient l'utilisateur que le salon n'existe pas
-                            Message messageError = new Message(Message.Header.QUIT_CR);
-                            messageError.addData("error");
-                            messageError.addData(message.MessageList[0]);
-                            sendMessage(messageError, session.Client.Client);
-
-                            messageError.addData("Chatroom " + e.Message + " does not exist");
-                        }
+                        quitCr(session, message);
                         break;
 
                     case Message.Header.CREATE_CR:
