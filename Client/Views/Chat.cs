@@ -28,6 +28,8 @@ namespace Client.Views
             InitializeComponent();
             client = clientParam;
 
+            welcomeLabel.Text = "Welcome " + client.User.Login;
+
             chatroomsBindingList = new ThreadedBindingList<Chatroom>();
             client.ChatroomsBindingList = chatroomsBindingList;
             chatrooms.DataSource = chatroomsBindingList;
@@ -138,7 +140,20 @@ namespace Client.Views
 
         }
 
+        private void messageTextBox_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                sendButton_Click(sender, e);
+            }
+        }
+
         private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label1_Click(object sender, EventArgs e)
         {
 
         }

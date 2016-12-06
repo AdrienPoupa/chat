@@ -209,17 +209,11 @@ namespace Server
                                 session.User.Chatroom = new Chatroom(messageList[0]);
                                 Console.WriteLine("- " + session.User.Login + " joined the chatroom: " + messageList[0]);
 
-                                //On prévient le client que le salon a bien été rejoint
+                                // Tell the client the channel has been joined
                                 Message messageSuccess = new Message(Message.Header.JOIN_CR);
                                 messageSuccess.addData("success");
                                 messageSuccess.addData(messageList[0]);
                                 sendMessage(messageSuccess, session.Client.Client);
-
-                                //On envoie au client un message à afficher de la part du serveur
-                                Message messagePost = new Message(Message.Header.POST);
-                                messagePost.addData("Serveur");
-                                messagePost.addData(session.User.Login + " joined the chatroom \"" + messageList[0] + "\"");
-                                sendMessage(messagePost, session.Client.Client);
 
                                 //On broadcast à tous les participants de la conversations l'arrivée de l'utilisateur
                                 Message messagePostBroadcast = new Message(Message.Header.POST);
@@ -228,7 +222,7 @@ namespace Server
                         }
                         catch (ChatroomUnknownException e)
                         {
-                            //On prévient l'utilisateur qu'il n'a pas été ajouté à la conversation
+                            // Tell the client the channel has not been joined
                             Message messageSuccess = new Message(Message.Header.JOIN_CR);
                             messageSuccess.addData("error");
                             messageSuccess.addData(message.MessageList[0]);
@@ -402,7 +396,7 @@ namespace Server
             {
                 Message messageJoin = new Message(Message.Header.POST);
                 messageJoin.addData(session.User.Login);
-                messageJoin.addData(message);
+                messageJoin.addData(session.User.Login+": "+message);
 
                 foreach(Session sessionUser in SessionManager.SessionList.ToList())
                 {

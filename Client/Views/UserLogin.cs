@@ -118,5 +118,10 @@ namespace Client.Views
                 loginButton_Click(sender, e);
             }
         }
+
+        private void passwordTextBox_TextChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }
