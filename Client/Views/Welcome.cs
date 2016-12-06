@@ -50,7 +50,7 @@ namespace Client.Views
                 var frm = new UserLogin(client);
                 frm.Location = this.Location;
                 frm.StartPosition = FormStartPosition.Manual;
-                frm.FormClosing += delegate { this.Show(); };
+                frm.FormClosing += delegate { this.Close(); };
                 frm.Show();
                 this.Hide();
             }

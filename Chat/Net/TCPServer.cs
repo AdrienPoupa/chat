@@ -93,7 +93,7 @@ namespace Chat.Net
                 NetworkStream strm = new NetworkStream(socket);
                 formatter.Serialize(strm, message);
             }
-            catch (SerializationException e)
+            catch (Exception e)
             {
                 Console.WriteLine("TCPServer sendMessage exception: " + e.Message);
                 Console.WriteLine(e.Message);

@@ -60,7 +60,7 @@ namespace Client.Views
                 var frm = new Chat(client);
                 frm.Location = this.Location;
                 frm.StartPosition = FormStartPosition.Manual;
-                frm.FormClosing += delegate { this.Close(); };
+                frm.FormClosing += delegate { this.Show(); };
                 frm.Show();
                 this.Hide();
             }

@@ -18,7 +18,7 @@ namespace Client.Views
     public partial class Chat : Form
     {
         private Client client;
-        private Thread checkChartooms;
+        private Thread checkChatrooms;
         private Thread checkUsers;
         private ThreadedBindingList<Chatroom> chatroomsBindingList;
         private ThreadedBindingList<User> usersBindingList;
@@ -27,28 +27,6 @@ namespace Client.Views
         {
             InitializeComponent();
             client = clientParam;
-
-            welcomeLabel.Text = "Welcome " + client.User.Login;
-
-            chatroomsBindingList = new ThreadedBindingList<Chatroom>();
-            client.ChatroomsBindingList = chatroomsBindingList;
-            chatrooms.DataSource = chatroomsBindingList;
-
-            usersBindingList = new ThreadedBindingList<User>();
-            client.UsersBindingList = usersBindingList;
-            userlist.DataSource = usersBindingList;
-
-            messagesBindingList = new ThreadedBindingList<String>();
-            client.MessagesBindingList = messagesBindingList;
-            messages.DataSource = messagesBindingList;
-
-            checkChartooms = new Thread(new ThreadStart(this.getChatrooms));
-            checkChartooms.Start();
-
-            checkUsers = new Thread(new ThreadStart(this.getUsers));
-            checkUsers.Start();
-
-            client.User.Chatroom = new Chatroom("");
         }
 
         private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
@@ -156,6 +134,40 @@ namespace Client.Views
         private void label1_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void Chat_Load(object sender, EventArgs e)
+        {
+            this.FormClosing += new FormClosingEventHandler(Chat_Closing);
+
+            welcomeLabel.Text = "Welcome " + client.User.Login;
+
+            chatroomsBindingList = new ThreadedBindingList<Chatroom>();
+            client.ChatroomsBindingList = chatroomsBindingList;
+            chatrooms.DataSource = chatroomsBindingList;
+
+            usersBindingList = new ThreadedBindingList<User>();
+            client.UsersBindingList = usersBindingList;
+            userlist.DataSource = usersBindingList;
+
+            messagesBindingList = new ThreadedBindingList<String>();
+            client.MessagesBindingList = messagesBindingList;
+            messages.DataSource = messagesBindingList;
+
+            checkChatrooms = new Thread(new ThreadStart(this.getChatrooms));
+            checkChatrooms.Start();
+
+            checkUsers = new Thread(new ThreadStart(this.getUsers));
+            checkUsers.Start();
+
+            client.User.Chatroom = new Chatroom("");
+        }
+
+        private void Chat_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            Console.WriteLine("Client exiting");
+            client.Quit = true;
+            client.Logged = false;
         }
     }
 }
