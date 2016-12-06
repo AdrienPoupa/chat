@@ -81,7 +81,7 @@
             // 
             this.sendButton.Location = new System.Drawing.Point(578, 346);
             this.sendButton.Name = "sendButton";
-            this.sendButton.Size = new System.Drawing.Size(64, 20);
+            this.sendButton.Size = new System.Drawing.Size(64, 22);
             this.sendButton.TabIndex = 5;
             this.sendButton.Text = "Send";
             this.sendButton.UseVisualStyleBackColor = true;
