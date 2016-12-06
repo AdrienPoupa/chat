@@ -29,10 +29,17 @@ namespace Client
             }
             else
             {
-                ctx.Send(delegate
+                try
                 {
-                    BaseAddingNew(e);
-                }, null);
+                    ctx.Send(delegate
+                    {
+                        BaseAddingNew(e);
+                    }, null);
+                }
+                catch (Exception)
+                {
+                    Console.WriteLine("Error");
+                }
             }
         }
         void BaseAddingNew(AddingNewEventArgs e)
@@ -47,10 +54,18 @@ namespace Client
             }
             else
             {
-                ctx.Send(delegate
+                try
                 {
-                    BaseListChanged(e);
-                }, null);
+                    ctx.Send(delegate
+                    {
+                        BaseListChanged(e);
+                    }, null);
+                }
+                catch (Exception)
+                {
+                    Console.WriteLine("Error");
+                }
+
             }
         }
         void BaseListChanged(ListChangedEventArgs e)
