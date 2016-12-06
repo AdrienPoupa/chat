@@ -44,6 +44,14 @@ namespace Chat.Chat
             return -1;
         }
 
+        public bool Equals(Chatroom other)
+        {
+            if (this.Name == other.Name)
+                return true;
+
+            return false;
+        }
+
         public override string ToString()
         {
             return name;

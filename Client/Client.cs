@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -17,6 +18,48 @@ namespace Client
         private ChatroomManager chatroomManager;
         private UserManager userManager;
         private Boolean logged;
+        private Views.Chat mainForm;
+        private ThreadedBindingList<Chatroom> chatroomsBindingList;
+        private ThreadedBindingList<User> usersBindingList;
+
+        public ThreadedBindingList<Chatroom> ChatroomsBindingList
+        {
+            get
+            {
+                return chatroomsBindingList;
+            }
+
+            set
+            {
+                chatroomsBindingList = value;
+            }
+        }
+
+        public ThreadedBindingList<User> UsersBindingList
+        {
+            get
+            {
+                return usersBindingList;
+            }
+
+            set
+            {
+                usersBindingList = value;
+            }
+        }
+
+        public Views.Chat MainForm
+        {
+            get
+            {
+                return mainForm;
+            }
+
+            set
+            {
+                mainForm = value;
+            }
+        }
 
         public User User
         {
@@ -72,11 +115,11 @@ namespace Client
 
         public Client()
         {
-            User = new User();
-            ChatroomManager = new ChatroomManager();
+            user = new User();
+            chatroomManager = new ChatroomManager();
             UserManager = new UserManager();
             Quit = false;
-            Logged = false;
+            logged = false;
         }
 
         public void post(string message)
@@ -100,7 +143,7 @@ namespace Client
 
         public void checkData()
         {
-            while(!Quit)
+            while (!Quit)
             {
                 try
                 {
@@ -143,7 +186,7 @@ namespace Client
 
         public void processData(Message message)
         {
-            switch(message.Head)
+            switch (message.Head)
             {
                 case Message.Header.REGISTER:
                     if(message.MessageList[0] == "success")
@@ -178,7 +221,7 @@ namespace Client
                 case Message.Header.JOIN_CR:
                     if (message.MessageList[0] == "success")
                     {
-                        User.Chatroom = new Chatroom(message.MessageList[0]);
+                        User.Chatroom = new global::Chat.Chat.Chatroom(message.MessageList[0]);
                         Console.WriteLine("- Joined chatroom: " + message.MessageList[1]);
                     }
                     else
@@ -212,21 +255,23 @@ namespace Client
                     break;
 
                 case Message.Header.LIST_CR:
-                    ChatroomManager.ChatroomList.Clear();
 
-                    foreach(string chatroom in message.MessageList)
+                    foreach (string chatroom in message.MessageList.ToList())
                     {
-                        chatroomManager.addChatroom(new Chatroom(chatroom));
-                        Console.WriteLine(chatroom);
+                        if (chatroomsBindingList.ToList().Any(x => x.Name == chatroom) == false)
+                        {
+                            Console.WriteLine(chatroom);
+                            chatroomsBindingList.Add(new Chatroom(chatroom));
+                        }
                     }
                     break;
 
                 case Message.Header.LIST_USERS:
-                    UserManager.UserList.Clear();
+                    usersBindingList.Clear();
 
                     foreach (string user in message.MessageList)
                     {
-                        userManager.addUser(user, "");
+                        usersBindingList.Add(new User(user, ""));
                         Console.WriteLine(user);
                     }
                     break;
