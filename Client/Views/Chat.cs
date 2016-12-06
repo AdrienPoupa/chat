@@ -34,9 +34,6 @@ namespace Client.Views
             client.UsersBindingList = usersBindingList;
             userlist.DataSource = usersBindingList;
 
-            /*BindingList<User> us = new BindingList<User>(client.UserManager.UserList);
-            userlist.DataSource = us;*/
-
             checkChartooms = new Thread(new ThreadStart(this.getChatrooms));
             checkChartooms.Start();
 
@@ -71,7 +68,7 @@ namespace Client.Views
                 client.User.Chatroom.Name != chatrooms.Text && 
                 chatrooms.Text != "")
             {
-                client.User.Chatroom = new global::Chat.Chat.Chatroom(chatrooms.Text);
+                client.User.Chatroom = new Chatroom(chatrooms.Text);
                 ChatMessage joinCr = new ChatMessage(ChatMessage.Header.JOIN_CR);
                 joinCr.addData(chatrooms.Text);
                 client.sendMessage(joinCr);
@@ -88,19 +85,6 @@ namespace Client.Views
                     client.sendMessage(messageChatrooms);
                     Thread.Sleep(2000);
 
-                    // We cannot directly edit UI elements from a thread. Let's invoke the UI itself.
-                    /*chatrooms.BeginInvoke(
-                        (Action)(() =>
-                        {
-                            this.chatrooms.SelectedIndexChanged -= new EventHandler(chatrooms_SelectedIndexChanged);
-                            chatrooms.DataSource = null;
-                            chatrooms.DataSource = client.ChatroomManager.ChatroomList;
-                            this.chatrooms.SelectedIndexChanged += new EventHandler(chatrooms_SelectedIndexChanged);
-                        })
-                   );*/
-
-
-
                     // Now, check the users
                     if (client.User.Chatroom != null && client.User.Chatroom.Name != "")
                     {
@@ -115,17 +99,6 @@ namespace Client.Views
                         );
                         
                         Thread.Sleep(2000);
-
-                        // We cannot directly edit UI elements from a thread. Let's invoke the UI itself.
-                        /*userlist.BeginInvoke(
-                            (Action)(() =>
-                            {
-                                userlist.SelectionMode = SelectionMode.MultiExtended;
-                                userlist.DataSource = null;
-                                userlist.DataSource = client.UserManager.UserList;
-                                userlist.SelectionMode = SelectionMode.None;
-                            })
-                       );*/
                     }
                 }
                 catch (Exception e)
