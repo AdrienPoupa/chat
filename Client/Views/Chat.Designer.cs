@@ -31,9 +31,9 @@
             this.userlist = new System.Windows.Forms.ListBox();
             this.chatrooms = new System.Windows.Forms.ComboBox();
             this.createChatroomButton = new System.Windows.Forms.Button();
-            this.textBox1 = new System.Windows.Forms.TextBox();
             this.messageTextBox = new System.Windows.Forms.TextBox();
             this.sendButton = new System.Windows.Forms.Button();
+            this.messages = new System.Windows.Forms.ListBox();
             this.SuspendLayout();
             // 
             // userlist
@@ -66,15 +66,6 @@
             this.createChatroomButton.UseVisualStyleBackColor = true;
             this.createChatroomButton.Click += new System.EventHandler(this.createChatroomButton_Click);
             // 
-            // textBox1
-            // 
-            this.textBox1.Location = new System.Drawing.Point(127, 36);
-            this.textBox1.Multiline = true;
-            this.textBox1.Name = "textBox1";
-            this.textBox1.ReadOnly = true;
-            this.textBox1.Size = new System.Drawing.Size(515, 289);
-            this.textBox1.TabIndex = 3;
-            // 
             // messageTextBox
             // 
             this.messageTextBox.Location = new System.Drawing.Point(127, 331);
@@ -94,14 +85,22 @@
             this.sendButton.UseVisualStyleBackColor = true;
             this.sendButton.Click += new System.EventHandler(this.sendButton_Click);
             // 
+            // messages
+            // 
+            this.messages.FormattingEnabled = true;
+            this.messages.Location = new System.Drawing.Point(127, 36);
+            this.messages.Name = "messages";
+            this.messages.Size = new System.Drawing.Size(515, 290);
+            this.messages.TabIndex = 6;
+            // 
             // Chat
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(654, 359);
+            this.Controls.Add(this.messages);
             this.Controls.Add(this.sendButton);
             this.Controls.Add(this.messageTextBox);
-            this.Controls.Add(this.textBox1);
             this.Controls.Add(this.createChatroomButton);
             this.Controls.Add(this.chatrooms);
             this.Controls.Add(this.userlist);
@@ -117,8 +116,8 @@
         private System.Windows.Forms.ListBox userlist;
         private System.Windows.Forms.ComboBox chatrooms;
         private System.Windows.Forms.Button createChatroomButton;
-        private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.TextBox messageTextBox;
         private System.Windows.Forms.Button sendButton;
+        private System.Windows.Forms.ListBox messages;
     }
 }

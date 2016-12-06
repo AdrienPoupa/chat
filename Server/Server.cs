@@ -152,9 +152,7 @@ namespace Server
                     sendMessage(messageSuccess, session.Client.Client);
 
                     //On prévient les autres utilisateurs que celui-ci est parti
-                    Message messagePostBroadcast = new Message(Message.Header.POST);
-                    messagePostBroadcast.addData("left the chatroom \"" + session.User.Chatroom.Name + "\"");
-                    broadcastToChatRoom(session, messagePostBroadcast);
+                    broadcastToChatRoom(session, "left the chatroom \"" + session.User.Chatroom.Name + "\"");
 
                     Console.WriteLine("- " + session.User.Login + " left the chatroom: " + session.User.Chatroom.Name);
 
@@ -189,9 +187,7 @@ namespace Server
                             if(session.User.Chatroom != null)
                             {
                                 //On prévient les autres utilisateurs que celui-ci est parti
-                                Message messagePostBroadcast = new Message(Message.Header.POST);
-                                messagePostBroadcast.addData("left the chatroom \"" + session.User.Chatroom.Name + "\"");
-                                broadcastToChatRoom(session, messagePostBroadcast);
+                                broadcastToChatRoom(session, "left the chatroom \"" + session.User.Chatroom.Name + "\"");
                             }
                             
                             session.Client.Close();
@@ -227,8 +223,7 @@ namespace Server
 
                                 //On broadcast à tous les participants de la conversations l'arrivée de l'utilisateur
                                 Message messagePostBroadcast = new Message(Message.Header.POST);
-                                messagePostBroadcast.addData("joined the chatroom \"" + messageList[0] + "\"");
-                                broadcastToChatRoom(session, messagePostBroadcast);
+                                broadcastToChatRoom(session, "joined the chatroom \"" + messageList[0] + "\"");
                             }
                         }
                         catch (ChatroomUnknownException e)
@@ -284,7 +279,7 @@ namespace Server
 
                     case Message.Header.POST:
                         Console.WriteLine("- " + session.User.Login + " : message received : " + message.MessageList[0]);
-                        broadcastToChatRoom(session, message);
+                        broadcastToChatRoom(session, message.MessageList[0]);
                         break;
 
                     case Message.Header.LIST_USERS:
@@ -385,10 +380,8 @@ namespace Server
                                 SessionManager.SessionList[i].User.Chatroom != null)
                             {
                                 //On prévient les autres utilisateurs que celui-ci est parti
-                                Message messagePostBroadcast = new Message(Message.Header.POST);
-                                messagePostBroadcast.addData("left the chatroom \"" + 
+                                broadcastToChatRoom(SessionManager.SessionList[i], "left the chatroom \"" +
                                     SessionManager.SessionList[i].User.Chatroom.Name + "\"");
-                                broadcastToChatRoom(SessionManager.SessionList[i], messagePostBroadcast);
                             }
 
                             SessionManager.SessionList[i].Client.Close();
@@ -401,21 +394,20 @@ namespace Server
             }
         }
 
-        private void broadcastToChatRoom(Session session, Message message)
+        private void broadcastToChatRoom(Session session, string message)
         {
             Chatroom chatroom = session.User.Chatroom;
 
-            if(chatroom != null)
+            if(chatroom != null && message != "")
             {
                 Message messageJoin = new Message(Message.Header.POST);
                 messageJoin.addData(session.User.Login);
-                messageJoin.addData(message.MessageList[0]);
+                messageJoin.addData(message);
 
                 foreach(Session sessionUser in SessionManager.SessionList.ToList())
                 {
                     if(sessionUser.User.Chatroom != null && 
-                        sessionUser.User.Chatroom == chatroom && 
-                        sessionUser.User != session.User)
+                        sessionUser.User.Chatroom.Name == chatroom.Name)
                     {
                         sendMessage(messageJoin, sessionUser.Client.Client);
                     }

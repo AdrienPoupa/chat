@@ -19,8 +19,10 @@ namespace Client.Views
     {
         private Client client;
         private Thread checkChartooms;
+        private Thread checkUsers;
         private ThreadedBindingList<Chatroom> chatroomsBindingList;
         private ThreadedBindingList<User> usersBindingList;
+        private ThreadedBindingList<string> messagesBindingList;
         public Chat(Client clientParam)
         {
             InitializeComponent();
@@ -34,8 +36,15 @@ namespace Client.Views
             client.UsersBindingList = usersBindingList;
             userlist.DataSource = usersBindingList;
 
+            messagesBindingList = new ThreadedBindingList<String>();
+            client.MessagesBindingList = messagesBindingList;
+            messages.DataSource = messagesBindingList;
+
             checkChartooms = new Thread(new ThreadStart(this.getChatrooms));
             checkChartooms.Start();
+
+            checkUsers = new Thread(new ThreadStart(this.getUsers));
+            checkUsers.Start();
 
             client.User.Chatroom = new Chatroom("");
         }
@@ -75,29 +84,28 @@ namespace Client.Views
             }
         }
 
-        private void getChatrooms()
+        private void getUsers()
         {
             while (!client.Quit)
             {
                 try
                 {
-                    ChatMessage messageChatrooms = new ChatMessage(ChatMessage.Header.LIST_CR);
-                    client.sendMessage(messageChatrooms);
-                    Thread.Sleep(2000);
-
                     // Now, check the users
                     if (client.User.Chatroom != null && client.User.Chatroom.Name != "")
                     {
                         chatrooms.BeginInvoke(
                             (Action)(() =>
                             {
-                                ChatMessage messageUsers = new ChatMessage(ChatMessage.Header.LIST_USERS);
-                                messageUsers.addData(chatrooms.Text);
+                                if (chatrooms.Text != "")
+                                {
+                                    ChatMessage messageUsers = new ChatMessage(ChatMessage.Header.LIST_USERS);
+                                    messageUsers.addData(chatrooms.Text);
 
-                                client.sendMessage(messageUsers);
+                                    client.sendMessage(messageUsers);
+                                }
                             })
                         );
-                        
+
                         Thread.Sleep(2000);
                     }
                 }
@@ -108,7 +116,29 @@ namespace Client.Views
             }
         }
 
+        private void getChatrooms()
+        {
+            while (!client.Quit)
+            {
+                try
+                {
+                    ChatMessage messageChatrooms = new ChatMessage(ChatMessage.Header.LIST_CR);
+                    client.sendMessage(messageChatrooms);
+                    Thread.Sleep(2000);
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.Message);
+                }
+            }
+        }
+
         private void messageTextBox_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void textBox1_TextChanged(object sender, EventArgs e)
         {
 
         }

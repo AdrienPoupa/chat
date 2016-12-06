@@ -21,6 +21,20 @@ namespace Client
         private Views.Chat mainForm;
         private ThreadedBindingList<Chatroom> chatroomsBindingList;
         private ThreadedBindingList<User> usersBindingList;
+        private ThreadedBindingList<string> messagesBindingList;
+
+        public ThreadedBindingList<string> MessagesBindingList
+        {
+            get
+            {
+                return messagesBindingList;
+            }
+
+            set
+            {
+                messagesBindingList = value;
+            }
+        }
 
         public ThreadedBindingList<Chatroom> ChatroomsBindingList
         {
@@ -221,7 +235,10 @@ namespace Client
                 case Message.Header.JOIN_CR:
                     if (message.MessageList[0] == "success")
                     {
-                        User.Chatroom = new global::Chat.Chat.Chatroom(message.MessageList[0]);
+                        // Clear current messages
+                        messagesBindingList.Clear();
+
+                        User.Chatroom = new Chatroom(message.MessageList[0]);
                         Console.WriteLine("- Joined chatroom: " + message.MessageList[1]);
                     }
                     else
@@ -278,6 +295,7 @@ namespace Client
 
                 case Message.Header.POST:
                     Console.WriteLine("- Message received: (" + message.MessageList[0] + ") " + message.MessageList[1]);
+                    messagesBindingList.Add(message.MessageList[1]);
                     break;
             }
         }
