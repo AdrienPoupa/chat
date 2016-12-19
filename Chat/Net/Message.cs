@@ -7,6 +7,11 @@ using System.Threading.Tasks;
 
 namespace Chat.Net
 {
+    /// <summary>
+    /// Store a message
+    /// Each message is composed of a header, which describe its nature (register an user, join a chatroom, quit a chatroom, post a message, etc)
+    /// Then, its content is stored into a list of strings
+    /// </summary>
     [Serializable]
     public class Message
     {
@@ -60,6 +65,10 @@ namespace Chat.Net
             this.MessageList = messages;
         }
 
+        /// <summary>
+        /// Add data to the message list
+        /// </summary>
+        /// <param name="message"></param>
         public void addData(string message)
         {
             this.MessageList.Add(message);

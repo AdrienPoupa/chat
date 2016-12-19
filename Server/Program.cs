@@ -9,6 +9,9 @@ using Server.Views;
 
 namespace Server
 {
+    /// <summary>
+    /// Server entry point, calling the WinForm which calls the Server class
+    /// </summary>
     class Program
     {
         static void Main(string[] args)

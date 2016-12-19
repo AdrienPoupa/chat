@@ -7,10 +7,16 @@ using Chat.Exceptions;
 
 namespace Chat.Auth
 {
+    /// <summary>
+    /// Handle users in a manager
+    /// </summary>
     public class UserManager
     {
         List<User> userList;
 
+        /// <summary>
+        /// Store users in a list
+        /// </summary>
         public List<User> UserList
         {
             get
@@ -29,6 +35,11 @@ namespace Chat.Auth
             UserList = new List<User>();
         }
 
+        /// <summary>
+        /// Add an user to the list. Make sure it does not already exist, using his login.
+        /// </summary>
+        /// <param name="login"></param>
+        /// <param name="password"></param>
         public void addUser(string login, string password)
         {
             foreach (User user in UserList.ToList())
@@ -42,6 +53,10 @@ namespace Chat.Auth
             UserList.Add(new User(login, password));
         }
 
+        /// <summary>
+        /// Remove the user from the list based on his login
+        /// </summary>
+        /// <param name="login"></param>
         public void removeUser(string login)
         {
             User userToDelete = null;
@@ -62,6 +77,11 @@ namespace Chat.Auth
             UserList.Remove(userToDelete);
         }
 
+        /// <summary>
+        /// Find an user in the list
+        /// </summary>
+        /// <param name="other">User to look for</param>
+        /// <returns>User found</returns>
         public User getUser(User other)
         {
             User getUser = null;
@@ -82,6 +102,11 @@ namespace Chat.Auth
             return getUser;
         }
 
+        /// <summary>
+        /// Auth the user based on his password.
+        /// </summary>
+        /// <param name="login"></param>
+        /// <param name="password"></param>
         public void authentify(string login, string password)
         {
             User userToAuthentify = null;
@@ -100,6 +125,10 @@ namespace Chat.Auth
             }
         }
 
+        /// <summary>
+        /// Load the users from a static file
+        /// </summary>
+        /// <param name="path">Path to the file</param>
         public void load(string path)
         {
             try
@@ -117,6 +146,10 @@ namespace Chat.Auth
             }
         }
 
+        /// <summary>
+        /// Save the current list to a static file.
+        /// </summary>
+        /// <param name="path">Path to the file</param>
         public void save(string path)
         {
             try

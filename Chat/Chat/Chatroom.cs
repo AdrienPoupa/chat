@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace Chat.Chat
 {
+    /// <summary>
+    /// Handle a chatroom
+    /// </summary>
     [Serializable]
     public class Chatroom : IComparable<Chatroom>, INotifyPropertyChanged
     {
@@ -14,6 +17,10 @@ namespace Chat.Chat
 
         public event PropertyChangedEventHandler PropertyChanged;
 
+        /// <summary>
+        /// Getter & setter for chatroom's name.
+        /// Implement the PropertyChanged to make the binding list work.
+        /// </summary>
         public string Name
         {
             get
@@ -52,6 +59,10 @@ namespace Chat.Chat
             return false;
         }
 
+        /// <summary>
+        /// Display a chatroom, useful for the binding list
+        /// </summary>
+        /// <returns></returns>
         public override string ToString()
         {
             return name;

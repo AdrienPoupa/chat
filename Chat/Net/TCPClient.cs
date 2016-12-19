@@ -11,6 +11,10 @@ using System.Threading.Tasks;
 
 namespace Chat.Net
 {
+    /// <summary>
+    /// Each client has a TCPClient instance, which contains a TcpClient object
+    /// as well as the server's IPAddress and port, and a boolean used to know when to quit
+    /// </summary>
     [Serializable]
     public abstract class TCPClient
     {
@@ -70,11 +74,14 @@ namespace Chat.Net
             this.IpAddress = ipAddress;
         }
 
+        /// <summary>
+        /// Connect to the server
+        /// </summary>
         public void connect()
         {
             try
             {
-                tcpClient = new TcpClient("127.0.0.1", Port);
+                tcpClient = new TcpClient(ipAddress.ToString(), Port);
             }
             catch(SocketException e)
             {
@@ -84,11 +91,11 @@ namespace Chat.Net
             }
         }
 
-        public void close()
-        {
-            throw new NotImplementedException();
-        }
-
+        /// <summary>
+        /// Get a message from the server.
+        /// Deserialize the object message received and return it
+        /// </summary>
+        /// <returns>Message object received</returns>
         public Message getMessage()
         {
             try
@@ -108,6 +115,10 @@ namespace Chat.Net
             return null;
         }
 
+        /// <summary>
+        /// Send a message to the server
+        /// </summary>
+        /// <param name="message">Message to send</param>
         public void sendMessage(Message message)
         {
             Console.WriteLine("## TCPClient Sending a message: " + message.Head);

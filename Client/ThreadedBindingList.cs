@@ -8,11 +8,11 @@ using System.Threading.Tasks;
 
 namespace Client
 {
-    /**
-     * Source
-     * http://stackoverflow.com/questions/4823481/bindinglist-not-updating-bound-listbox
-     * */
-
+    /// <summary>
+    /// Binding list made to work with threads
+    /// Source: http://stackoverflow.com/questions/4823481/bindinglist-not-updating-bound-listbox
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
     public class ThreadedBindingList<T> : BindingList<T>
     {
         private readonly SynchronizationContext ctx;

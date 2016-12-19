@@ -4,6 +4,9 @@ using Chat.Chat;
 
 namespace Chat.Auth
 {
+    /// <summary>
+    /// Handle an user
+    /// </summary>
     [Serializable()]
     public class User : IComparable<User>
     {
@@ -53,6 +56,12 @@ namespace Chat.Auth
         public User()
         {
             this.Login = "";
+            this.Password = "";
+        }
+
+        public User(string login)
+        {
+            this.Login = login;
             this.Password = "";
         }
 

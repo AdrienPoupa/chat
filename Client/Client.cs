@@ -12,6 +12,10 @@ using System.Net.Sockets;
 
 namespace Client
 {
+    /// <summary>
+    /// Client class.
+    /// Contains the logic to run the client, and the elements required by the UI
+    /// </summary>
     public class Client : TCPClient
     {
         private User user;
@@ -23,6 +27,9 @@ namespace Client
         private ThreadedBindingList<User> usersBindingList;
         private ThreadedBindingList<string> messagesBindingList;
 
+        /// <summary>
+        /// Messages displayed to the user
+        /// </summary>
         public ThreadedBindingList<string> MessagesBindingList
         {
             get
@@ -36,6 +43,9 @@ namespace Client
             }
         }
 
+        /// <summary>
+        /// List of chatrooms
+        /// </summary>
         public ThreadedBindingList<Chatroom> ChatroomsBindingList
         {
             get
@@ -49,6 +59,9 @@ namespace Client
             }
         }
 
+        /// <summary>
+        /// List of users
+        /// </summary>
         public ThreadedBindingList<User> UsersBindingList
         {
             get
@@ -62,6 +75,9 @@ namespace Client
             }
         }
 
+        /// <summary>
+        /// We need the main winform object to invoke its thread and modify its elements
+        /// </summary>
         public Views.Chat MainForm
         {
             get
@@ -75,6 +91,9 @@ namespace Client
             }
         }
 
+        /// <summary>
+        /// Current user
+        /// </summary>
         public User User
         {
             get
@@ -88,6 +107,9 @@ namespace Client
             }
         }
 
+        /// <summary>
+        /// We need a local UserManager object
+        /// </summary>
         public UserManager UserManager
         {
             get
@@ -101,6 +123,9 @@ namespace Client
             }
         }
 
+        /// <summary>
+        /// We need a local ChatroomManager object
+        /// </summary>
         public ChatroomManager ChatroomManager
         {
             get
@@ -114,6 +139,9 @@ namespace Client
             }
         }
 
+        /// <summary>
+        /// Useful to know if current user is logged in
+        /// </summary>
         public bool Logged
         {
             get
@@ -135,17 +163,12 @@ namespace Client
             Quit = false;
             logged = false;
         }
-
-        public void post(string message)
-        {
-            if(!Quit)
-            {
-                Message messagePost = new Message(Message.Header.POST);
-                messagePost.addData(message);
-                sendMessage(messagePost);
-            }
-        }
-
+       
+        /// <summary>
+        /// Launch what we need for the client
+        /// First a thread to check the connection and process the data sent by the server
+        /// Then a thread to quit if needed
+        /// </summary>
         public void run()
         {
             Thread checkConnection = new Thread(new ThreadStart(this.checkData));
@@ -155,6 +178,9 @@ namespace Client
             checkQuit.Start();
         }
 
+        /// <summary>
+        /// Check if we have messages incoming from the server
+        /// </summary>
         public void checkData()
         {
             while (!Quit)
@@ -168,6 +194,7 @@ namespace Client
 
                         if (message != null)
                         {
+                            // We have a message: call to processData
                             Thread processData = new Thread(() => this.processData(message));
                             processData.Start();
                         }
@@ -182,6 +209,9 @@ namespace Client
             }
         }
 
+        /// <summary>
+        /// Do what needs to be done if server is disconnected
+        /// </summary>
         private void checkQuit()
         {
             while (!Quit)
@@ -198,7 +228,11 @@ namespace Client
             }
         }
 
-        public void processData(Message message)
+        /// <summary>
+        /// Deal with the message received
+        /// </summary>
+        /// <param name="message"></param>
+        private void processData(Message message)
         {
             switch (message.Head)
             {
@@ -277,7 +311,6 @@ namespace Client
                     {
                         if (chatroomsBindingList.ToList().Any(x => x.Name == chatroom) == false)
                         {
-                            Console.WriteLine(chatroom);
                             chatroomsBindingList.Add(new Chatroom(chatroom));
                         }
                     }
@@ -288,8 +321,7 @@ namespace Client
 
                     foreach (string user in message.MessageList)
                     {
-                        usersBindingList.Add(new User(user, ""));
-                        Console.WriteLine(user);
+                        usersBindingList.Add(new User(user));
                     }
                     break;
 

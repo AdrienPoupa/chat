@@ -12,6 +12,9 @@ using System.Threading.Tasks;
 
 namespace Chat.Net
 {
+    /// <summary>
+    /// TCPServer
+    /// </summary>
     [Serializable]
     public abstract class TCPServer
     {
@@ -36,6 +39,10 @@ namespace Chat.Net
             }
         }
 
+        /// <summary>
+        /// Start the server, locally
+        /// </summary>
+        /// <param name="port"></param>
         public void startServer(int port)
         {
             this.port = port;
@@ -55,6 +62,9 @@ namespace Chat.Net
             
         }
 
+        /// <summary>
+        /// Stop the server
+        /// </summary>
         public void stopServer()
         {
             Console.WriteLine("Stopping the server");
@@ -62,6 +72,11 @@ namespace Chat.Net
             tcpListener.Stop();
         }
 
+        /// <summary>
+        /// Get a message object from a given client
+        /// </summary>
+        /// <param name="socket">Client to listen to</param>
+        /// <returns>Deserialized Message object</returns>
         public Message getMessage(Socket socket)
         {
             Console.WriteLine("## TCPServer Receiving a message");
@@ -83,6 +98,11 @@ namespace Chat.Net
             return null;
         }
 
+        /// <summary>
+        /// Send a message to a given client
+        /// </summary>
+        /// <param name="message">Message to send</param>
+        /// <param name="socket">Client to send the message to</param>
         public void sendMessage(Message message, Socket socket)
         {
             Console.WriteLine("## TCPServer Sending a message: " + message.Head);

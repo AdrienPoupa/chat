@@ -7,12 +7,18 @@ using System.Net.Sockets;
 
 namespace Chat.Auth
 {
+    /// <summary>
+    /// Create a session for each user
+    /// </summary>
     public class Session
     {
         Guid token;
         User user;
         TcpClient client;
 
+        /// <summary>
+        /// Each session has an unique token
+        /// </summary>
         public Guid Token
         {
             get

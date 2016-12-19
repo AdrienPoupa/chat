@@ -12,6 +12,9 @@ using Chat.Chat;
 
 namespace Server.Views
 {
+    /// <summary>
+    /// Server's WinForm
+    /// </summary>
     public partial class ServerGUI : Form
     {
         // That's our custom TextWriter class
@@ -31,13 +34,18 @@ namespace Server.Views
             Console.SetOut(_writer);
         }
 
+        /// <summary>
+        /// Handle the "Start/Stop server" bitton click
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void button1_Click(object sender, EventArgs e)
         {
             if (button1.Text == "Start the server")
             {
                 button1.Text = "Stop the server";
                 server = new Server();
-                server.startServer(Int32.Parse(textBox1.Text));
+                server.startServer(Int32.Parse(textBox1.Text)); // Start the server
 
                 if (server.Running)
                 {
@@ -54,7 +62,7 @@ namespace Server.Views
             else
             {
                 button1.Text = "Start the server";
-                server.stopServer();
+                server.stopServer(); // Stop the server
             }
         }
 

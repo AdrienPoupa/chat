@@ -11,43 +11,67 @@ using ChatMessage = Chat.Net.Message;
 
 namespace Client.Views
 {
+    /// <summary>
+    /// WinForm to add a chatroom
+    /// </summary>
     public partial class AddChatroom : Form
     {
         private Client client;
+
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="clientParam">Get the client instance</param>
         public AddChatroom(Client clientParam)
         {
             InitializeComponent();
             client = clientParam;
         }
 
+        /// <summary>
+        /// Action performed on Create chatroom button click
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void createChatroomButton_Click(object sender, EventArgs e)
         {
             ChatMessage chatroomsMessage = new ChatMessage(ChatMessage.Header.CREATE_CR);
             chatroomsMessage.addData(chatroomTextBox.Text);
 
-            client.sendMessage(chatroomsMessage);
-
-            ChatMessage reply = client.getMessage();
-
-            if (reply == null)
+            if (chatroomTextBox.Text != "")
             {
-                MessageBox.Show("Server failure",
-                     "Connection error",
-                     MessageBoxButtons.OK,
-                     MessageBoxIcon.Error);
-            }
+                client.sendMessage(chatroomsMessage);
 
-            if (reply.MessageList.First() == "success")
-            {
-                this.Close();
+                ChatMessage reply = client.getMessage();
+
+                if (reply == null)
+                {
+                    MessageBox.Show("Server failure",
+                        "Connection error",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Error);
+                }
+
+                if (reply.MessageList.First() == "success")
+                {
+                    this.Close();
+                }
+                else if (reply.MessageList.First() == "error")
+                {
+                    MessageBox.Show(reply.MessageList[1],
+                        "Could not create chatroom",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Error);
+                }
             }
-            else if (reply.MessageList.First() == "error")
+            else
             {
-                MessageBox.Show(reply.MessageList[1],
-                    "Could not create chatroom",
-                     MessageBoxButtons.OK,
-                     MessageBoxIcon.Error);
+                MessageBox.Show("Please enter a chatroom name",
+                        "Chatroom empty",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Error);
             }
+            
         }
     }
 }

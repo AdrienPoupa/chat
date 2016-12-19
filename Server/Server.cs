@@ -12,14 +12,21 @@ using System.Net.Sockets;
 
 namespace Server
 {
+    /// <summary>
+    /// The Server class itself
+    /// </summary>
     class Server : TCPServer
     {
         UserManager userManager;
         SessionManager sessionManager;
         ChatroomManager chatroomManager;
         
-        public volatile bool readLock = false;
+        public volatile bool readLock;
 
+        /// <summary>
+        /// Instanciate objects
+        /// Load Users and Chatrooms already stored in a static file
+        /// </summary>
         public Server()
         {
             userManager = new UserManager();
@@ -68,6 +75,12 @@ namespace Server
             }
         }
 
+        /// <summary>
+        /// Running the server launches 3 threads:
+        /// Check for the messages sent by users
+        /// Check if a client has left
+        /// Create a new TcpClient object if a new client joins
+        /// </summary>
         public void run()
         {
             checkDataThread = new Thread(new ThreadStart(this.checkData));
@@ -80,6 +93,10 @@ namespace Server
             listenerThread.Start();
         }
 
+        /// <summary>
+        /// Listen for new clients and create a new Session for each new client with its own TcpClient instance
+        /// Since AcceptTcpClient is blocking, this is run in a thread
+        /// </summary>
         private void listen()
         {
             while (this.Running)
@@ -102,6 +119,9 @@ namespace Server
             }
         }
 
+        /// <summary>
+        /// Check data coming from clients
+        /// </summary>
         private void checkData()
         {
             while (this.Running)
@@ -121,6 +141,7 @@ namespace Server
 
                                 if(message != null)
                                 {
+                                    // We have data to process: call to the appropriate function
                                     Thread processData = new Thread(() => this.processData(session, message));
                                     processData.Start();
                                 }
@@ -139,19 +160,24 @@ namespace Server
             }
         }
 
+        /// <summary>
+        /// Check if a client has left a chatroom
+        /// </summary>
+        /// <param name="session"></param>
+        /// <param name="message"></param>
         private void quitCr(Session session, Message message)
         {
             try
             {
                 if (session.User.Chatroom != null)
                 {
-                    //On prévient l'utilisateur qu'il a quitté la conversation
+                    // Warn the user he left the chatroom
                     Message messageSuccess = new Message(Message.Header.QUIT_CR);
                     messageSuccess.addData("success");
                     messageSuccess.addData(session.User.Chatroom.Name);
                     sendMessage(messageSuccess, session.Client.Client);
 
-                    //On prévient les autres utilisateurs que celui-ci est parti
+                    // Warn the other users that this one left
                     broadcastToChatRoom(session, "left the chatroom \"" + session.User.Chatroom.Name + "\"");
 
                     Console.WriteLine("- " + session.User.Login + " left the chatroom: " + session.User.Chatroom.Name);
@@ -161,7 +187,7 @@ namespace Server
             }
             catch (ChatroomUnknownException e)
             {
-                //On prévient l'utilisateur que le salon n'existe pas
+                // Warn the user the chatroom does not exist
                 Message messageError = new Message(Message.Header.QUIT_CR);
                 messageError.addData("error");
                 messageError.addData(message.MessageList[0]);
@@ -171,6 +197,11 @@ namespace Server
             }
         }
 
+        /// <summary>
+        /// Process data sent by clients
+        /// </summary>
+        /// <param name="session">Session from where the message comes from</param>
+        /// <param name="message">Message received</param>
         private void processData(Session session, Message message)
         {
             if (session.User != null)
@@ -179,14 +210,14 @@ namespace Server
                 {
                     case Message.Header.QUIT:
                         {
-                            //On prévient l'utilisateur qu'il a été déconnecté
+                            // Warn the user he has been disconnected
                             Message messageSuccess = new Message(Message.Header.QUIT);
                             messageSuccess.addData("success");
                             sendMessage(messageSuccess, session.Client.Client);
 
                             if(session.User.Chatroom != null)
                             {
-                                //On prévient les autres utilisateurs que celui-ci est parti
+                                // Warn the other users that he left
                                 broadcastToChatRoom(session, "left the chatroom \"" + session.User.Chatroom.Name + "\"");
                             }
                             
@@ -242,7 +273,7 @@ namespace Server
                             ChatroomManager.addChatroom(new Chatroom(messageList[0]));
                             ChatroomManager.save("chatrooms.db");
 
-                            //On prévient l'utilisateur que le salon a bien été ajouté
+                            // Tell the users the chatroom has been created
                             Message messageSuccess = new Message(Message.Header.CREATE_CR);
                             messageSuccess.addData("success");
                             messageSuccess.addData(messageList[0]);
@@ -252,7 +283,7 @@ namespace Server
                         }
                         catch (ChatroomAlreadyExistsException e)
                         {
-                            //On prévient l'utilisateur que le salon n'a pas été créé
+                            // Warn the user the chatroom has not been created
                             Message messageError = new Message(Message.Header.CREATE_CR);
                             messageError.addData("error");
                             messageError.addData("Chatroom " + e.Message + " already exists");
@@ -310,7 +341,7 @@ namespace Server
                             UserManager.addUser(messageList[0], messageList[1]);
                             UserManager.save("users.db");
 
-                            //On prévient l'utilisateur que son compte a bien été enregistré
+                            // Tell the user his account has been created
                             Message messageSuccess = new Message(Message.Header.REGISTER);
                             messageSuccess.addData("success");
                             sendMessage(messageSuccess, session.Client.Client);
@@ -319,7 +350,7 @@ namespace Server
                         }
                         catch (UserAlreadyExistsException e)
                         {
-                            //On prévient l'utilisateur que son compte n'a pas été créé
+                            // Warn the user his account has not been created
                             Message messageSuccess = new Message(Message.Header.REGISTER);
                             messageSuccess.addData("error");
                             sendMessage(messageSuccess, session.Client.Client);
@@ -356,6 +387,9 @@ namespace Server
             }
         }
 
+        /// <summary>
+        /// Check if a client has left
+        /// </summary>
         private void checkQuit()
         {
             while (this.Running)
@@ -373,7 +407,7 @@ namespace Server
                             if (SessionManager.SessionList[i].User != null && 
                                 SessionManager.SessionList[i].User.Chatroom != null)
                             {
-                                //On prévient les autres utilisateurs que celui-ci est parti
+                                // Tell the other users that he left
                                 broadcastToChatRoom(SessionManager.SessionList[i], "left the chatroom \"" +
                                     SessionManager.SessionList[i].User.Chatroom.Name + "\"");
                             }
@@ -388,6 +422,11 @@ namespace Server
             }
         }
 
+        /// <summary>
+        /// Function used to send a message to all users in a chatroom
+        /// </summary>
+        /// <param name="session"></param>
+        /// <param name="message"></param>
         private void broadcastToChatRoom(Session session, string message)
         {
             Chatroom chatroom = session.User.Chatroom;
@@ -396,7 +435,7 @@ namespace Server
             {
                 Message messageJoin = new Message(Message.Header.POST);
                 messageJoin.addData(session.User.Login);
-                messageJoin.addData(session.User.Login+": "+message);
+                messageJoin.addData(session.User.Login+": " + message);
 
                 foreach(Session sessionUser in SessionManager.SessionList.ToList())
                 {
