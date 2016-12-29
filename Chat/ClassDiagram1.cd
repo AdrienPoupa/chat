@@ -1,128 +1,135 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
-  <Class Name="Chat.Auth.Session">
-    <Position X="2.25" Y="0.5" Width="1.5" />
+  <Class Name="Chat.Auth.Session" Collapsed="true">
+    <Position X="21" Y="1.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAEBAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAABAQQ=</HashCode>
       <FileName>Auth\Session.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Chat.Auth.SessionManager">
-    <Position X="2.25" Y="3.5" Width="1.5" />
+  <Class Name="Chat.Auth.SessionManager" Collapsed="true">
+    <Position X="22.75" Y="1.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAEAAAAAAAgAAAAAAAAAAAAAAAAIAAAACAA=</HashCode>
       <FileName>Auth\SessionManager.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Chat.Auth.User" BaseTypeListCollapsed="true">
-    <Position X="4" Y="0.5" Width="1.5" />
+  <Class Name="Chat.Auth.User" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="21" Y="2.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AACAAAAAAAAAAAQEAAAAAAAAAAAAAAACAAAQAgAAkAA=</HashCode>
       <FileName>Auth\User.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
-  <Class Name="Chat.Auth.UserManager">
-    <Position X="4" Y="4" Width="1.5" />
+  <Class Name="Chat.Auth.UserManager" Collapsed="true">
+    <Position X="22.75" Y="2.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AACAAAAAAICAIAAAAAAAAAAAAAAAAQAAAAAAIBAAgAA=</HashCode>
       <FileName>Auth\UserManager.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Chat.Chat.Chatroom" BaseTypeListCollapsed="true">
-    <Position X="5.75" Y="0.5" Width="1.75" />
+  <Class Name="Chat.Chat.Chatroom" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="21" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAQEgAAAAAQAgAAEAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Chat\Chatroom.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
-  <Class Name="Chat.Chat.ChatroomManager">
-    <Position X="5.75" Y="4" Width="1.75" />
+  <Class Name="Chat.Chat.ChatroomManager" Collapsed="true">
+    <Position X="22.75" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAgAAAICAAAAIAABAAAAAAAAAAAAAAAAAAAAAAAI=</HashCode>
       <FileName>Chat\ChatroomManager.cs</FileName>
     </TypeIdentifier>
   </Class>
+  <Class Name="Chat.Exceptions.AuthentificationException" Collapsed="true">
+    <Position X="14" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Exceptions\AuthentificationException.cs</FileName>
+    </TypeIdentifier>
+  </Class>
   <Class Name="Chat.Exceptions.ChatroomAlreadyExistsException" Collapsed="true">
-    <Position X="9.5" Y="7.75" Width="2.25" />
+    <Position X="9.25" Y="5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Exceptions\ChatroomAlreadyExistsException.cs</FileName>
     </TypeIdentifier>
   </Class>
+  <Class Name="Chat.Exceptions.ChatroomException" Collapsed="true">
+    <Position X="10.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Exceptions\ChatroomException.cs</FileName>
+    </TypeIdentifier>
+  </Class>
   <Class Name="Chat.Exceptions.ChatroomUnknownException" Collapsed="true">
-    <Position X="9.5" Y="6.75" Width="2.25" />
+    <Position X="11.5" Y="5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Exceptions\ChatroomUnknownException.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Chat.Exceptions.RegisterException" Collapsed="true">
-    <Position X="10.25" Y="4.75" Width="1.5" />
+    <Position X="26.25" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Exceptions\RegisterException.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Chat.Exceptions.SessionAlreadyExistsException" Collapsed="true">
-    <Position X="9.5" Y="5.75" Width="2.25" />
+    <Position X="11.75" Y="2" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Exceptions\SessionAlreadyExistsException.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Chat.Exceptions.SessionUnknownException" Collapsed="true">
-    <Position X="9.5" Y="0.75" Width="2.25" />
+    <Position X="14" Y="2" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Exceptions\SessionUnknownException.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Chat.Exceptions.UserAlreadyExistsException" Collapsed="true">
-    <Position X="9.5" Y="1.75" Width="2.25" />
+    <Position X="16.25" Y="2" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Exceptions\UserAlreadyExistsException.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Chat.Exceptions.UserUnknownException" Collapsed="true">
-    <Position X="10.25" Y="3.75" Width="1.5" />
+    <Position X="18.5" Y="2" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Exceptions\UserUnknownException.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Chat.Exceptions.WrongPasswordException" Collapsed="true">
-    <Position X="10.25" Y="2.75" Width="1.5" />
+    <Position X="9.5" Y="2" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Exceptions\WrongPasswordException.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Chat.Net.Message">
-    <Position X="7.75" Y="0.75" Width="1.5" />
-    <NestedTypes>
-      <Enum Name="Chat.Net.Message.Header" Collapsed="true">
-        <TypeIdentifier>
-          <NewMemberFileName>Net\Message.cs</NewMemberFileName>
-        </TypeIdentifier>
-      </Enum>
-    </NestedTypes>
+  <Class Name="Chat.Net.Message" Collapsed="true">
+    <Position X="24.5" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAgAAAgAAAAIAAAAAAAAAAQAAAAEAAAAAAAAAAAAA=</HashCode>
       <FileName>Net\Message.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Chat.Net.TCPClient">
-    <Position X="0.5" Y="0.5" Width="1.5" />
+  <Class Name="Chat.Net.TCPClient" Collapsed="true">
+    <Position X="24.5" Y="1.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAIAAgACAAAAgKAAAAAgAAAABAAAgAQA=</HashCode>
       <FileName>Net\TCPClient.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Chat.Net.TCPServer">
-    <Position X="0.5" Y="4.5" Width="1.5" />
+  <Class Name="Chat.Net.TCPServer" Collapsed="true">
+    <Position X="26.25" Y="1.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAEAAAAAAAAAAAAABAIAAgAAgAQAiIAAAAEAAgAAA=</HashCode>
       <FileName>Net\TCPServer.cs</FileName>

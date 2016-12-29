@@ -21,7 +21,7 @@ namespace Server
         SessionManager sessionManager;
         ChatroomManager chatroomManager;
         
-        public volatile bool readLock;
+        public volatile Object readLock;
 
         /// <summary>
         /// Instanciate objects
@@ -34,6 +34,7 @@ namespace Server
             sessionManager = new SessionManager();
             chatroomManager = new ChatroomManager();
             chatroomManager.load("chatrooms.db");
+            readLock = new Object();
         }
 
         public UserManager UserManager
@@ -128,28 +129,27 @@ namespace Server
             {
                 try
                 {
-                    readLock = true;
-
-                    if (SessionManager.SessionList.Count > 0)
+                    lock (readLock)
                     {
-                        foreach (Session session in SessionManager.SessionList.ToList())
+                        if (SessionManager.SessionList.Count > 0)
                         {
-                            if(session != null && session.Client.GetStream().DataAvailable)
+                            foreach (Session session in SessionManager.SessionList.ToList())
                             {
-                                Thread.Sleep(25);
-                                Message message = getMessage(session.Client.Client);
-
-                                if(message != null)
+                                if (session != null && session.Client.GetStream().DataAvailable)
                                 {
-                                    // We have data to process: call to the appropriate function
-                                    Thread processData = new Thread(() => this.processData(session, message));
-                                    processData.Start();
+                                    Thread.Sleep(25);
+                                    Message message = getMessage(session.Client.Client);
+
+                                    if (message != null)
+                                    {
+                                        // We have data to process: call to the appropriate function
+                                        Thread processData = new Thread(() => this.processData(session, message));
+                                        processData.Start();
+                                    }
                                 }
                             }
                         }
                     }
-
-                    readLock = false;
                 }
                 catch(InvalidOperationException e)
                 {
