@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Chat.Exceptions
 {
-    public class UserUnknownException : System.Exception
+    public class UserUnknownException : AuthentificationException
     {
         public UserUnknownException(string message) : base(message)
         {

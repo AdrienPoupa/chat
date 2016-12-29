@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Chat.Exceptions
 {
-    public class SessionUnknownException : System.Exception
+    public class SessionUnknownException : AuthentificationException
     {
         public SessionUnknownException(string message) : base(message)
         {

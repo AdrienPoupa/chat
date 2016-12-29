@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Chat.Exceptions
 {
-    public class ChatroomAlreadyExistsException : System.Exception
+    public class ChatroomAlreadyExistsException : ChatroomException
     {
         public ChatroomAlreadyExistsException(string message) : base(message)
         {

@@ -89,10 +89,17 @@ namespace Chat.Net
                 Console.WriteLine("- message header: " + message.Head);
                 return message;
             }
-            catch(Exception e)
+            catch (SerializationException e)
             {
-                Console.WriteLine("TCPServer getMessage exception: " + e.Message);
-                Console.WriteLine(e.Message);
+                Console.WriteLine("TCPClient sendMessage exception: " + e.Message);
+            }
+            catch (IOException e)
+            {
+                Console.WriteLine("TCPClient sendMessage exception: " + e.Message);
+            }
+            catch (InvalidOperationException e)
+            {
+                Console.WriteLine("TCPClient sendMessage exception: " + e.Message);
             }
 
             return null;
@@ -113,10 +120,17 @@ namespace Chat.Net
                 NetworkStream strm = new NetworkStream(socket);
                 formatter.Serialize(strm, message);
             }
-            catch (Exception e)
+            catch (SerializationException e)
             {
-                Console.WriteLine("TCPServer sendMessage exception: " + e.Message);
-                Console.WriteLine(e.Message);
+                Console.WriteLine("TCPClient sendMessage exception: " + e.Message);
+            }
+            catch (IOException e)
+            {
+                Console.WriteLine("TCPClient sendMessage exception: " + e.Message);
+            }
+            catch (InvalidOperationException e)
+            {
+                Console.WriteLine("TCPClient sendMessage exception: " + e.Message);
             }
         }
     }

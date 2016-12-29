@@ -53,11 +53,13 @@
     <Compile Include="Auth\User.cs" />
     <Compile Include="Chat\Chatroom.cs" />
     <Compile Include="Chat\ChatroomManager.cs" />
+    <Compile Include="Exceptions\ChatroomException.cs" />
     <Compile Include="Exceptions\ChatroomUnknownException.cs" />
     <Compile Include="Exceptions\ChatroomAlreadyExistsException.cs" />
     <Compile Include="Exceptions\SessionUnknownException.cs" />
     <Compile Include="Exceptions\UserAlreadyExistsException.cs" />
     <Compile Include="Exceptions\SessionAlreadyExistsException.cs" />
+    <Compile Include="Exceptions\AuthentificationException.cs" />
     <Compile Include="Exceptions\UserUnknownException.cs" />
     <Compile Include="Exceptions\RegisterException.cs" />
     <Compile Include="Exceptions\WrongPasswordException.cs" />

@@ -155,6 +155,9 @@ namespace Client
             }
         }
 
+        /// <summary>
+        /// Client constructor
+        /// </summary>
         public Client()
         {
             user = new User();

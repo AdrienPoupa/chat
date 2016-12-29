@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Chat.Exceptions
 {
-    public class SessionAlreadyExistsException : System.Exception
+    public class SessionAlreadyExistsException : AuthentificationException
     {
         public SessionAlreadyExistsException(string message) : base(message)
         {

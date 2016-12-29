@@ -106,10 +106,17 @@ namespace Chat.Net
                 Console.WriteLine("## TCPClient Receiving a message: " + message.Head);
                 return message;
             }
-            catch (Exception e)
+            catch (SerializationException e)
             {
-                Console.WriteLine("TCPClient getMessage exception: " + e.Message);
-                Console.WriteLine(e.Message);
+                Console.WriteLine("TCPClient sendMessage exception: " + e.Message);
+            }
+            catch (IOException e)
+            {
+                Console.WriteLine("TCPClient sendMessage exception: " + e.Message);
+            }
+            catch (InvalidOperationException e)
+            {
+                Console.WriteLine("TCPClient sendMessage exception: " + e.Message);
             }
 
             return null;
@@ -132,6 +139,14 @@ namespace Chat.Net
             catch (SerializationException e)
             {
                 Console.WriteLine("TCPClient sendMessage exception: "+e.Message);
+            }
+            catch(IOException e)
+            {
+                Console.WriteLine("TCPClient sendMessage exception: " + e.Message);
+            }
+            catch(InvalidOperationException e)
+            {
+                Console.WriteLine("TCPClient sendMessage exception: " + e.Message);
             }
         }
     }
