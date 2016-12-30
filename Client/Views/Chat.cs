@@ -25,6 +25,7 @@ namespace Client.Views
         private Client client;
         private Thread checkChatrooms;
         private Thread checkUsers;
+        private Thread checkServer;
         private ThreadedBindingList<Chatroom> chatroomsBindingList;
         private ThreadedBindingList<User> usersBindingList;
         private ThreadedBindingList<string> messagesBindingList;
@@ -141,21 +142,7 @@ namespace Client.Views
                 }
             }
 
-            if (client.Quit)
-            {
-                // Close the chat if the server is no longer available
-                Console.WriteLine("Close from getUsers");
-                MessageBox.Show("The server is unreachable, please retry.",
-                    "Connection error",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Error);
-                chatrooms.BeginInvoke(
-                    (Action) (() =>
-                    {
-                        this.Close();
-                    })
-                );
-            }
+            
         }
 
         /// <summary>
@@ -175,6 +162,33 @@ namespace Client.Views
                 {
                     Console.WriteLine(e.Message);
                 }
+            }
+        }
+
+        /// <summary>
+        /// Periodically check if the server is available
+        /// </summary>
+        private void getServer()
+        {
+            while (!client.Quit)
+            {
+                Thread.Sleep(2000);
+            }
+
+            if (client.Quit)
+            {
+                // Close the chat if the server is no longer available
+                Console.WriteLine("Close from getUsers");
+                MessageBox.Show("The server is unreachable, please retry.",
+                    "Connection error",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
+                chatrooms.BeginInvoke(
+                    (Action)(() =>
+                    {
+                        this.Close();
+                    })
+                );
             }
         }
 
@@ -239,6 +253,10 @@ namespace Client.Views
             // Start the thread to check the users connected to the current chatroom
             checkUsers = new Thread(new ThreadStart(this.getUsers));
             checkUsers.Start();
+
+            // Start the thread to check server
+            checkServer = new Thread(new ThreadStart(this.getServer));
+            checkServer.Start();
         }
 
         /// <summary>
@@ -249,8 +267,7 @@ namespace Client.Views
         private void Chat_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             Console.WriteLine("Client exiting");
-            checkChatrooms.Abort();
-            checkUsers.Abort();
+            checkServer.Abort();
             client.Quit = true;
             client.Logged = false;
         }
