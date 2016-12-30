@@ -141,18 +141,21 @@ namespace Client.Views
                 }
             }
 
-            // Close the chat if the server is no longer available
-            Console.WriteLine("Close from getUsers");
-            MessageBox.Show("The server is unreachable, please retry.",
-                "Connection error",
-                MessageBoxButtons.OK,
-                MessageBoxIcon.Error);
-            chatrooms.BeginInvoke(
-                (Action) (() =>
-                {
-                    this.Close();
-                })
-            );
+            if (client.Quit)
+            {
+                // Close the chat if the server is no longer available
+                Console.WriteLine("Close from getUsers");
+                MessageBox.Show("The server is unreachable, please retry.",
+                    "Connection error",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
+                chatrooms.BeginInvoke(
+                    (Action) (() =>
+                    {
+                        this.Close();
+                    })
+                );
+            }
         }
 
         /// <summary>
@@ -246,6 +249,8 @@ namespace Client.Views
         private void Chat_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             Console.WriteLine("Client exiting");
+            checkChatrooms.Abort();
+            checkUsers.Abort();
             client.Quit = true;
             client.Logged = false;
         }
