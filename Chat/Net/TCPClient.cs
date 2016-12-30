@@ -98,25 +98,31 @@ namespace Chat.Net
         /// <returns>Message object received</returns>
         public Message getMessage()
         {
-            try
+            if (!Quit)
             {
-                NetworkStream strm = tcpClient.GetStream();
-                IFormatter formatter = new BinaryFormatter();
-                Message message = (Message)formatter.Deserialize(strm);
-                Console.WriteLine("## TCPClient Receiving a message: " + message.Head);
-                return message;
-            }
-            catch (SerializationException e)
-            {
-                Console.WriteLine("TCPClient sendMessage exception: " + e.Message);
-            }
-            catch (IOException e)
-            {
-                Console.WriteLine("TCPClient sendMessage exception: " + e.Message);
-            }
-            catch (InvalidOperationException e)
-            {
-                Console.WriteLine("TCPClient sendMessage exception: " + e.Message);
+                try
+                {
+                    NetworkStream strm = tcpClient.GetStream();
+                    IFormatter formatter = new BinaryFormatter();
+                    Message message = (Message)formatter.Deserialize(strm);
+                    Console.WriteLine("## TCPClient Receiving a message: " + message.Head);
+                    return message;
+                }
+                catch (SerializationException e)
+                {
+                    Console.WriteLine("TCPClient sendMessage exception: " + e.Message);
+                    Quit = true;
+                }
+                catch (IOException e)
+                {
+                    Console.WriteLine("TCPClient sendMessage exception: " + e.Message);
+                    Quit = true;
+                }
+                catch (InvalidOperationException e)
+                {
+                    Console.WriteLine("TCPClient sendMessage exception: " + e.Message);
+                    Quit = true;
+                }
             }
 
             return null;
@@ -128,25 +134,31 @@ namespace Chat.Net
         /// <param name="message">Message to send</param>
         public void sendMessage(Message message)
         {
-            Console.WriteLine("## TCPClient Sending a message: " + message.Head);
+            if (!Quit)
+            {
+                Console.WriteLine("## TCPClient Sending a message: " + message.Head);
 
-            try
-            {
-                IFormatter formatter = new BinaryFormatter();
-                NetworkStream strm = tcpClient.GetStream();
-                formatter.Serialize(strm, message);
-            }
-            catch (SerializationException e)
-            {
-                Console.WriteLine("TCPClient sendMessage exception: "+e.Message);
-            }
-            catch(IOException e)
-            {
-                Console.WriteLine("TCPClient sendMessage exception: " + e.Message);
-            }
-            catch(InvalidOperationException e)
-            {
-                Console.WriteLine("TCPClient sendMessage exception: " + e.Message);
+                try
+                {
+                    IFormatter formatter = new BinaryFormatter();
+                    NetworkStream strm = tcpClient.GetStream();
+                    formatter.Serialize(strm, message);
+                }
+                catch (SerializationException e)
+                {
+                    Console.WriteLine("TCPClient sendMessage exception: " + e.Message);
+                    Quit = true;
+                }
+                catch (IOException e)
+                {
+                    Console.WriteLine("TCPClient sendMessage exception: " + e.Message);
+                    Quit = true;
+                }
+                catch (InvalidOperationException e)
+                {
+                    Console.WriteLine("TCPClient sendMessage exception: " + e.Message);
+                    Quit = true;
+                }
             }
         }
     }

@@ -402,7 +402,7 @@ namespace Server
                     {
                         Console.WriteLine("- User logged out : " + SessionManager.SessionList[i].Token);
 
-                        if (!readLock)
+                        lock(readLock)
                         {
                             if (SessionManager.SessionList[i].User != null && 
                                 SessionManager.SessionList[i].User.Chatroom != null)

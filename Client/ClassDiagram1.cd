@@ -36,7 +36,7 @@
     </TypeIdentifier>
   </Class>
   <Class Name="Client.Views.UserLogin">
-    <Position X="11.75" Y="0.5" Width="2.5" />
+    <Position X="11.5" Y="0.5" Width="2.5" />
     <TypeIdentifier>
       <HashCode>BAAAAAQAASAACgAAACCABAATAgAAAAAAAEAABAwAAAA=</HashCode>
       <FileName>Views\UserLogin.cs</FileName>

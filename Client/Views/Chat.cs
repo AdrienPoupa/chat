@@ -119,7 +119,7 @@ namespace Client.Views
                     {
                         // We need to invoke chatrooms (UI thread) to see the selected index
                         chatrooms.BeginInvoke(
-                            (Action)(() =>
+                            (Action) (() =>
                             {
                                 // If we are indeed connected to a chatroom
                                 if (chatrooms.Text != "")
@@ -140,6 +140,19 @@ namespace Client.Views
                     Console.WriteLine(e.Message);
                 }
             }
+
+            // Close the chat if the server is no longer available
+            Console.WriteLine("Close from getUsers");
+            MessageBox.Show("The server is unreachable, please retry.",
+                "Connection error",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Error);
+            chatrooms.BeginInvoke(
+                (Action) (() =>
+                {
+                    this.Close();
+                })
+            );
         }
 
         /// <summary>
