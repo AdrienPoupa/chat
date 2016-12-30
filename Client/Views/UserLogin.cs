@@ -124,8 +124,8 @@ namespace Client.Views
 
                 if (register.MessageList.First() == "success")
                 {
-                    MessageBox.Show("Registration success",
-                        "Registration success. You can now login using your credentials.",
+                    MessageBox.Show("Registration success. You can now login using your credentials.",
+                        "Registration success.",
                          MessageBoxButtons.OK,
                          MessageBoxIcon.Information);
                 }

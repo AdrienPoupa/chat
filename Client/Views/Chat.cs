@@ -178,7 +178,7 @@ namespace Client.Views
             if (client.Quit)
             {
                 // Close the chat if the server is no longer available
-                Console.WriteLine("Close from getUsers");
+                Console.WriteLine("Close from getServer");
                 MessageBox.Show("The server is unreachable, please retry.",
                     "Connection error",
                     MessageBoxButtons.OK,
